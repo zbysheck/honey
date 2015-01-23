@@ -13,6 +13,8 @@ class Level():
     platform_list = None
     enemy_list = None
 
+    tileSize = 70
+
     # Background image
     background = None
 
@@ -26,6 +28,22 @@ class Level():
         self.platform_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
         self.player = player
+
+    def onetile(self, tile, y,x):
+        return [platforms.GRASS_MIDDLE, x*self.tileSize, y*self.tileSize]
+
+    def generatetiles(self, txt):
+        generated=[]
+        txt=txt.split("\n")
+        result=[]
+        for i in txt:
+            result.append(list(i))
+        for i in range(len(result)):
+            for j in range(len(result[0])):
+                if txt[i][j]=='#':
+                    generated.append(self.onetile("blabla", i,j))
+        return generated
+
 
     # Update everythign on this level
     def update(self):
@@ -87,6 +105,17 @@ class Level_01(Level):
                   [platforms.STONE_PLATFORM_MIDDLE, 1190, 280],
                   [platforms.STONE_PLATFORM_RIGHT, 1260, 280],
                   ]
+
+        txt="""#########
+#.......#
+#.......#
+######.##
+#.......#
+#........
+#########"""
+
+        level = level+self.generatetiles(txt)
+
 
 
         # Go through the array above and add platforms
