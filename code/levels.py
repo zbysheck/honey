@@ -2,6 +2,7 @@ import pygame
 
 import constants
 import platforms
+import thing
 
 class Level():
     """ This is a generic super-class used to define a level.
@@ -12,6 +13,7 @@ class Level():
     # lists as needed for your game. """
     platform_list = None
     enemy_list = None
+    thing_list = None
 
     tileSize = 70
 
@@ -26,22 +28,25 @@ class Level():
         """ Constructor. Pass in a handle to player. Needed for when moving platforms
             collide with the player. """
         self.platform_list = pygame.sprite.Group()
+        self.thing_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
         self.player = player
 
-    def onetile(self, tile, y,x):
-        return [platforms.GRASS_MIDDLE, x*self.tileSize, y*self.tileSize]
+    def onetile(self, tile, y,x,passable):
+        return [tile, x*self.tileSize, y*self.tileSize, passable]
 
-    def generatetiles(self, txt):
-        generated=[]
-        txt=txt.split("\n")
-        result=[]
+    def generate_tiles(self, txt):
+        generated = []
+        txt = txt.split("\n")
+        result = []
         for i in txt:
             result.append(list(i))
         for i in range(len(result)):
-            for j in range(len(result[0])):
+            for j in range(len(result[i])):
                 if txt[i][j]=='#':
-                    generated.append(self.onetile("blabla", i,j))
+                    generated.append(self.onetile(platforms.WALL_SPRITE, i, j, False))
+                elif txt[i][j]=='l':
+                    generated.append(self.onetile(thing.LADDER_SPRITE, i, j, True))
         return generated
 
 
@@ -49,6 +54,7 @@ class Level():
     def update(self):
         """ Update everything in this level."""
         self.platform_list.update()
+        self.thing_list.update()
         self.enemy_list.update()
 
     def draw(self, screen):
@@ -62,6 +68,7 @@ class Level():
 
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
+        self.thing_list.draw(screen)
         self.enemy_list.draw(screen)
 
     def shift_world(self, shift_x):
@@ -73,6 +80,9 @@ class Level():
         # Go through all the sprite lists and shift
         for platform in self.platform_list:
             platform.rect.x += shift_x
+
+        for thing in self.thing_list:
+            thing.rect.x += shift_x
 
         for enemy in self.enemy_list:
             enemy.rect.x += shift_x
@@ -107,24 +117,32 @@ class Level_01(Level):
                   ]
 
         txt="""#########
+#.l.....#
 #.......#
-#.......#
-######.##
+######.###
 #.......#
 #........
+#........
+#l.......
 #########"""
 
-        level = level+self.generatetiles(txt)
+        level = self.generate_tiles(txt)#+level
 
 
 
         # Go through the array above and add platforms
         for platform in level:
-            block = platforms.Platform(platform[0])
+            if platform[3]:
+                block = thing.Thing(platform[0])
+            else:
+                block = platforms.Platform(platform[0])
             block.rect.x = platform[1]
             block.rect.y = platform[2]
             block.player = self.player
-            self.platform_list.add(block)
+            if platform[3]:
+                self.thing_list.add(block)
+            else:
+                self.platform_list.add(block)
 
         # Add a custom moving platform
         block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
