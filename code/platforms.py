@@ -131,9 +131,6 @@ class Husband(pygame.sprite.Sprite):
     def __init__(self):
         super(Husband, self).__init__()
 
-        # Call the parent's constructor
-        pygame.sprite.Sprite.__init__(self)
-
         self.change_x = 1;
         self.change_y = 0;
 
@@ -158,23 +155,12 @@ class Husband(pygame.sprite.Sprite):
         # Set a reference to the image rect.
         self.rect = self.image.get_rect()
 
-    def ai(self):
+    def _update_position(self):
         self.rect.x = self.rect.x + self.change_x
         self.rect.y = self.rect.y + self.change_y
 
-        if self.rect.x > 400:
-            self.direction = "L"
-            self.change_x = -1
-            self.change_y = 0
-        elif self.rect.x < 200:
-            self.direction = "R"
-            self.change_x = 1
-            self.change_y = 0
-
-    def update(self):
+    def _update_animation(self):
         self.sprite_frame_frequency = self.sprite_frame_frequency + 4
-
-        self.ai();
 
         if self.direction == "R":
             frame = (self.sprite_frame_frequency // 30) % len(self.walking_frames_r)
@@ -183,8 +169,31 @@ class Husband(pygame.sprite.Sprite):
             frame = (self.sprite_frame_frequency // 30) % len(self.walking_frames_l)
             self.image = self.walking_frames_l[frame]
 
+    def _set_direction(self, x, y):
+        self.change_x = x
+        self.change_y = y
+
+    def _collision_detection(self):
         hit = pygame.sprite.collide_rect(self, self.player)
         if hit:
             print "collision!"
 
+    def _ai(self):
+        self._update_position()
+
+        if self.rect.x > 400:
+            self.direction = "L"
+            self._set_direction(-1, 0)
+        elif self.rect.x < 200:
+            self.direction = "R"
+            self._set_direction(1, 0)
+
+        self._collision_detection()
+
         print str(time.time()) + "\t" + "updating " + "x=" + str(self.rect.x) + " y=" + str(self.rect.y)
+
+    def update(self):
+        self._ai();
+        self._update_animation()
+
+
