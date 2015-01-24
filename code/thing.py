@@ -21,7 +21,6 @@ STONE_PLATFORM_RIGHT  = (792, 648, 70, 40)
 WALL_SPRITE           = (504, 288, 70, 70)
 LADDER_SPRITE         = (504, 144, 70, 70)
 WALLPAPER_SPRITE      = (504, 0, 70, 70)
-WINDOW_WALL_SPRITE    = (504, 359, 70, 70)
 
 class Thing(pygame.sprite.Sprite):
     """ Platform the user can jump on """

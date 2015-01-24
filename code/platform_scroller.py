@@ -44,8 +44,8 @@ def main():
     pygame.init()
     pygame.font.init()
     pygame.mixer.init()
-    #music = pygame.mixer.Sound("resources/DST-Arch-Delerium.ogg")
-    #music.play(loops=-1)
+    music = pygame.mixer.Sound("resources/DST-Arch-Delerium.ogg")
+    music.play(loops=-1)
 
     # Set the height and width of the screen
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
@@ -69,7 +69,7 @@ def main():
     player.level = current_level
 
     player.rect.x = 340
-    player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - constants.TILE_HEIGHT
+    player.rect.y = constants.SCREEN_HEIGHT - player.rect.height-30
     active_sprite_list.add(player)
 
     #Loop until the user clicks the close button.
@@ -91,16 +91,12 @@ def main():
                     player.go_right()
                 if event.key == pygame.K_UP:
                     player.jump()
-                if event.key == pygame.K_SPACE:
-                    player.disable_movement()
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT and player.change_x < 0:
                     player.stop()
                 if event.key == pygame.K_RIGHT and player.change_x > 0:
                     player.stop()
-                if event.key == pygame.K_SPACE:
-                    player.enable_movement()
 
         # Update the player.
         active_sprite_list.update()

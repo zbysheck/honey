@@ -111,7 +111,7 @@ class Husband(pygame.sprite.Sprite):
     # Set speed vector of player
     change_x = 0
     change_y = 0
-    sprite_frame_frequency = 4
+    pos = 0
 
     PL_WIDTH = 64
     PL_HEIGHT = 64
@@ -126,16 +126,15 @@ class Husband(pygame.sprite.Sprite):
     # What direction is the player facing?
     direction = "R"
 
-    player = None
-
     def __init__(self):
         super(Husband, self).__init__()
 
-        self.change_x = 1
-        self.change_y = 0
+        # Call the parent's constructor
+        pygame.sprite.Sprite.__init__(self)
 
         sprite_sheet = SpriteSheet("husband.png")
 
+        ####
         for i in range(9):
             image = sprite_sheet.get_image(i * self.PL_WIDTH, 3 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
             self.walking_frames_r.append(image)
@@ -148,52 +147,24 @@ class Husband(pygame.sprite.Sprite):
         for i in range(9):
             image = sprite_sheet.get_image(i * self.PL_WIDTH, 2 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
             self.walking_frames_d.append(image)
+        ####
+
 
         # Set the image the player starts with
         self.image = self.walking_frames_l[0]
 
-        # Set a reference to the image rect.
+        # Set a referance to the image rect.
         self.rect = self.image.get_rect()
 
-    def _update_position(self):
-        self.rect.x = self.rect.x + self.change_x
-        self.rect.y = self.rect.y + self.change_y
+    def update(self):
+        print str(time.time()) + "\t" + "updating.."
 
-    def _update_animation(self):
-        self.sprite_frame_frequency = self.sprite_frame_frequency + 4
+        self.rect.x = self.rect.x + 1
+        self.pos = self.pos + 4
 
         if self.direction == "R":
-            frame = (self.sprite_frame_frequency // 30) % len(self.walking_frames_r)
+            frame = (self.pos // 30) % len(self.walking_frames_r)
             self.image = self.walking_frames_r[frame]
         else:
-            frame = (self.sprite_frame_frequency // 30) % len(self.walking_frames_l)
+            frame = (self.pos // 30) % len(self.walking_frames_l)
             self.image = self.walking_frames_l[frame]
-
-    def _set_direction(self, x, y):
-        self.change_x = x
-        self.change_y = y
-
-    def _collision_detection(self):
-        hit = pygame.sprite.collide_rect(self, self.player)
-        if hit:
-            print "collision!"
-
-    def _ai(self):
-        self._update_position()
-
-        if self.rect.x > 400:
-            self.direction = "L"
-            self._set_direction(-1, 0)
-        elif self.rect.x < 200:
-            self.direction = "R"
-            self._set_direction(1, 0)
-
-        self._collision_detection()
-
-        print str(time.time()) + "\t" + "updating " + "x=" + str(self.rect.x) + " y=" + str(self.rect.y)
-
-    def update(self):
-        self._ai();
-        self._update_animation()
-
-
