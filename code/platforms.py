@@ -111,7 +111,7 @@ class Husband(pygame.sprite.Sprite):
     # Set speed vector of player
     change_x = 0
     change_y = 0
-    pos = 0
+    sprite_frame_frequency = 4
 
     PL_WIDTH = 64.5
     PL_HEIGHT = 64.5
@@ -126,11 +126,16 @@ class Husband(pygame.sprite.Sprite):
     # What direction is the player facing?
     direction = "R"
 
+    player = None
+
     def __init__(self):
         super(Husband, self).__init__()
 
         # Call the parent's constructor
         pygame.sprite.Sprite.__init__(self)
+
+        self.change_x = 1;
+        self.change_y = 0;
 
         sprite_sheet = SpriteSheet("husband.png")
 
@@ -153,15 +158,33 @@ class Husband(pygame.sprite.Sprite):
         # Set a reference to the image rect.
         self.rect = self.image.get_rect()
 
-    def update(self):
-        print str(time.time()) + "\t" + "updating " + "x=" + str(self.rect.x) + " y=" + str(self.rect.y)
+    def ai(self):
+        self.rect.x = self.rect.x + self.change_x
+        self.rect.y = self.rect.y + self.change_y
 
-        self.rect.x = self.rect.x + 1
-        self.pos = self.pos + 4
+        if self.rect.x > 400:
+            self.direction = "L"
+            self.change_x = -1
+            self.change_y = 0
+        elif self.rect.x < 200:
+            self.direction = "R"
+            self.change_x = 1
+            self.change_y = 0
+
+    def update(self):
+        self.sprite_frame_frequency = self.sprite_frame_frequency + 4
+
+        self.ai();
 
         if self.direction == "R":
-            frame = (self.pos // 30) % len(self.walking_frames_r)
+            frame = (self.sprite_frame_frequency // 30) % len(self.walking_frames_r)
             self.image = self.walking_frames_r[frame]
         else:
-            frame = (self.pos // 30) % len(self.walking_frames_l)
+            frame = (self.sprite_frame_frequency // 30) % len(self.walking_frames_l)
             self.image = self.walking_frames_l[frame]
+
+        hit = pygame.sprite.collide_rect(self, self.player)
+        if hit:
+            print "collision!"
+
+        print str(time.time()) + "\t" + "updating " + "x=" + str(self.rect.x) + " y=" + str(self.rect.y)

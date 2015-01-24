@@ -165,6 +165,7 @@ class Level_01(Level):
         husband = platforms.Husband()
         husband.rect.x = 200
         husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - constants.TILE_HEIGHT
+        husband.player = player
         self.enemy_list.add(husband)
 
 # Create platforms for the level
