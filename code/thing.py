@@ -28,8 +28,8 @@ BED                   = (72, 432, 70, 70)
 WARDROBE_OPEN         = (72, 360, 70, 70)
 WARDROBE_CLOSED       = (144, 360, 70, 70)
 WARDROBE_CLOSED2       = (217, 360, 69, 70)
-DOOR_OPEN         = (0, 71, 70, 70)
-DOOR_CLOSED       = (0, 0, 70, 70)
+DOOR_OPEN         = (720, 432, 70, 70)
+DOOR_CLOSED       = (648, 432, 70, 70)
 SOCK              = (72, 0, 70, 70)
 
 class Thing(pygame.sprite.Sprite):
