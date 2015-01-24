@@ -113,6 +113,9 @@ class Husband(pygame.sprite.Sprite):
     # Set speed vector of player
     change_x = 0
     change_y = 0
+    x0 = 0
+    y0 = 0
+    direction = "R"
     sprite_frame_frequency = 4
 
     PL_WIDTH = 64
@@ -124,9 +127,6 @@ class Husband(pygame.sprite.Sprite):
     walking_frames_r = []
     walking_frames_u = []
     walking_frames_d = []
-
-    # What direction is the player facing?
-    direction = "R"
 
     player = None
 
@@ -158,6 +158,8 @@ class Husband(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def _update_position(self):
+        self.x0 = self.x0 + self.change_x
+        self.y0 = self.y0 + self.change_y
         self.rect.x = self.rect.x + self.change_x
         self.rect.y = self.rect.y + self.change_y
 
@@ -183,10 +185,10 @@ class Husband(pygame.sprite.Sprite):
     def _ai(self):
         self._update_position()
 
-        if self.rect.x > 400:
+        if self.x0 > 350:
             self.direction = "L"
             self._set_direction(-1, 0)
-        elif self.rect.x < 200:
+        elif self.x0 < 0:
             self.direction = "R"
             self._set_direction(1, 0)
 
