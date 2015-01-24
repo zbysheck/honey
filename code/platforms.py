@@ -21,6 +21,7 @@ STONE_PLATFORM_MIDDLE = (648, 648, 70, 40)
 STONE_PLATFORM_RIGHT  = (792, 648, 70, 40)
 WALL_SPRITE           = (504, 288, 70, 70)
 
+
 class Platform(pygame.sprite.Sprite):
     """ Platform the user can jump on """
 
