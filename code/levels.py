@@ -60,7 +60,7 @@ class Level():
                         elif txt[i][j] == 'w':
                             chosen_sprite = self.onetile(thing.WINDOW_WALL_SPRITE, i, j, self.player)
                         elif txt[i][j] == 's':
-                            chosen_sprite = [thing.WARDROBE_OPEN, j*self.tileSize, i*self.tileSize, self.player, thing.WARDROBE_CLOSED]
+                            chosen_sprite = [thing.WARDROBE_OPEN, j*self.tileSize, i*self.tileSize, self.player, thing.WARDROBE_CLOSED, thing.WARDROBE_CLOSED2]
                             t = thing.Wardrobe
                         elif txt[i][j] == 'D':
                             chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.player, thing.DOOR_OPEN]
