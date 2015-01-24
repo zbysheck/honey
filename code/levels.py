@@ -4,6 +4,8 @@ import constants
 import platforms
 import thing
 
+from husband import Husband
+
 class Level():
     """ This is a generic super-class used to define a level.
         Create a child class for each level with level-specific
@@ -60,6 +62,12 @@ class Level():
                         elif txt[i][j] == 's':
                             chosen_sprite = [thing.WARDROBE_OPEN, j*self.tileSize, i*self.tileSize, self.player, thing.WARDROBE_CLOSED]
                             t = thing.Wardrobe
+                        elif txt[i][j] == 'D':
+                            chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.player, thing.DOOR_OPEN]
+                            t = thing.Door
+                        elif txt[i][j] == 'c':
+                            chosen_sprite = [thing.SOCK, j*self.tileSize, i*self.tileSize, self.player]
+                            t = thing.Clothing
                         elif txt[i][j].isdigit():
                             chosen_sprite = [thing.STAIR_SPRITE, j*self.tileSize, i*self.tileSize, self.player, txt[i][j]]
                             t = thing.Staircase
@@ -140,7 +148,7 @@ class Level_01(Level):
  #..s..1......2...#
  ##################
  #.......#........#
- #b...1..D...2.....
+ #b...1..D.c.2.....
  ##################"""
 
         level = self.generate_tiles(txt)#+level
@@ -157,9 +165,9 @@ class Level_01(Level):
         self.platform_list.add(block)
 
         # Add husband
-        husband = platforms.Husband()
+        husband = Husband()
         husband.rect.x = 200
-        husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - constants.TILE_HEIGHT
+        husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
         husband.player = player
         self.enemy_list.add(husband)
 
