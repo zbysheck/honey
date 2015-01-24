@@ -47,11 +47,12 @@ class Level():
                     if txt[i][j] == '#':
                         generated.append(self.onetile(platforms.WALL_SPRITE, i, j, False))
                     else:
+                        # Put wallpaper behind other stuff
                         generated.append(self.onetile(thing.WALLPAPER_SPRITE, i, j, True))
                         if txt[i][j] == 'l':
                             generated.append(self.onetile(thing.LADDER_SPRITE, i, j, True))
                         elif txt[i][j] == 'w':
-                            generated.append(self.onetile(thing.LADDER_SPRITE, i, j, True))
+                            generated.append(self.onetile(thing.WINDOW_WALL_SPRITE, i, j, True))
         return generated
 
 
@@ -128,7 +129,7 @@ class Level_01(Level):
  ######l###########
  #.....l.#........#
  #.....l..........#
- #.....l...........
+ #.....l......w....
  ##################"""
 
         level = self.generate_tiles(txt)#+level
@@ -162,8 +163,9 @@ class Level_01(Level):
 
         # Add husband
         husband = platforms.Husband()
-        husband.rect.x = 0
-        husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height
+        husband.rect.x = 200
+        husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - constants.TILE_HEIGHT
+        husband.player = player
         self.enemy_list.add(husband)
 
 # Create platforms for the level
