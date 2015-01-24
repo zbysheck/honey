@@ -26,6 +26,7 @@ http://opengameart.org/content/platformer-art-deluxe
 
 import pygame
 
+import time
 import constants
 import levels
 import dialog
@@ -85,6 +86,8 @@ def main():
     # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
 
+    time_start = time.time()
+
     # -------- Main Program Loop -----------
     while not done:
         for event in pygame.event.get():  # User did something
@@ -140,7 +143,11 @@ def main():
         current_level.draw(screen)
         active_sprite_list.draw(screen)
         show_help(screen)
-        print_msg("What do we do now?", 100, 50, screen)
+
+        if time.time()-time_start < 2:
+            print_msg("Oh no! It's my husband!", 10,500, screen)
+        if time.time() - time_start < 4 and time.time() - time_start > 2:
+            print_msg("WHAT DO WE DO NOW?!?", 10, 510, screen)
         # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 
         # Limit to 60 frames per second
