@@ -19,6 +19,7 @@ class Level():
     thing_list = None
     door_list = {}
     tileSize = 70
+    wallpaper_points = []
 
     # Background image
     background = None
@@ -52,10 +53,9 @@ class Level():
                         t = self.one_tile(platforms.WALL_SPRITE, i, j, False)
                         block = platforms.Platform(t[0], t[1], t[2], self.player)
                         self.platform_list.add(block)
-                    else:
-                        # Put wallpaper behind other stuff
+                    elif txt[i][j] != '.':
+                        # Put wallpaper behind other stuff (or nooot)
                         t = thing.Thing
-                        chosen_sprite = self.one_tile(thing.WALLPAPER_SPRITE, i, j, self.player)
                         if txt[i][j] == 'l':
                             chosen_sprite = self.one_tile(thing.LADDER_SPRITE, i, j, self.player)
                         elif txt[i][j] == 'w':
@@ -95,6 +95,9 @@ class Level():
         screen.fill(constants.BLUE)
         screen.blit(self.background, (self.world_shift // 3, 0))
 
+        # Draw wallpaper
+        pygame.draw.polygon(screen, (255, 255, 0), self.wallpaper_points)
+
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
         self.thing_list.draw(screen)
@@ -116,6 +119,9 @@ class Level():
         for enemy in self.enemy_list:
             enemy.rect.x += shift_x
 
+        for x in self.wallpaper_points:
+            x[0] += shift_x
+
     def match_doors(self):
         door_dict = {}
         for i in self.thing_list:
@@ -125,6 +131,10 @@ class Level():
                     door_dict[i.door_number].paired_door = i
                 else:
                     door_dict[i.door_number] = i
+
+    def translate_wallpaper(self):
+        self.wallpaper_points = [[x * self.tileSize for x in y] for y in self.wallpaper_points]  # Fuck yeah
+        print self.wallpaper_points
 
 
 # Create platforms for the level
@@ -142,15 +152,19 @@ class Level01(Level):
         self.level_limit = -2500
 
         txt = """
- ##################
- #................#
- #..s..1......2...#
+ ################
+ #..............#
+ #..s..1......2.#
  ##################
  #.......#........#
- #b...1..D.c.2.....
+ #....1..D.c.2.....
  ##################"""
 
         level = self.generate_tiles(txt)  # +level
+
+        # init wallpaper boundaries
+        self.wallpaper_points += [[1, 1], [16, 1], [16, 4], [18, 4], [18, 7], [1, 7]]
+        self.translate_wallpaper()
 
         # Add a custom moving platform
         block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE, 1350, 280, self.player)

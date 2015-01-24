@@ -95,7 +95,7 @@ class Husband(pygame.sprite.Sprite):
 
         self._collision_detection()
 
-        print str(time.time()) + "\t" + "updating " + "x=" + str(self.rect.x) + " y=" + str(self.rect.y)
+        #print str(time.time()) + "\t" + "updating " + "x=" + str(self.rect.x) + " y=" + str(self.rect.y)
 
     def update(self):
         self._ai()
