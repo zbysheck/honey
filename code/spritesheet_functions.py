@@ -5,6 +5,7 @@ import pygame
 
 import constants
 
+
 class SpriteSheet(object):
     """ Class used to grab images out of a sprite sheet. """
     # This points to our sprite sheet image
@@ -15,7 +16,6 @@ class SpriteSheet(object):
 
         # Load the sprite sheet.
         self.sprite_sheet = pygame.image.load(file_name).convert()
-
 
     def get_image(self, x, y, width, height):
         """ Grab a single image out of a larger spritesheet

@@ -5,6 +5,7 @@ import time
 
 from spritesheet_functions import SpriteSheet
 
+
 class Husband(pygame.sprite.Sprite):
     """ This class represents the bar at the bottom that the player
     controls. """
@@ -36,7 +37,7 @@ class Husband(pygame.sprite.Sprite):
         self.change_x = 1
         self.change_y = 0
 
-        sprite_sheet = SpriteSheet("husband.png")
+        sprite_sheet = SpriteSheet("img/husband.png")
 
         for i in range(9):
             image = sprite_sheet.get_image(i * self.PL_WIDTH, 3 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
@@ -58,13 +59,13 @@ class Husband(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def _update_position(self):
-        self.x0 = self.x0 + self.change_x
-        self.y0 = self.y0 + self.change_y
-        self.rect.x = self.rect.x + self.change_x
-        self.rect.y = self.rect.y + self.change_y
+        self.x0 += self.change_x
+        self.y0 += self.change_y
+        self.rect.x += self.change_x
+        self.rect.y += self.change_y
 
     def _update_animation(self):
-        self.sprite_frame_frequency = self.sprite_frame_frequency + 4
+        self.sprite_frame_frequency += 4
 
         if self.direction == "R":
             frame = (self.sprite_frame_frequency // 30) % len(self.walking_frames_r)
@@ -97,5 +98,5 @@ class Husband(pygame.sprite.Sprite):
         print str(time.time()) + "\t" + "updating " + "x=" + str(self.rect.x) + " y=" + str(self.rect.y)
 
     def update(self):
-        self._ai();
+        self._ai()
         self._update_animation()

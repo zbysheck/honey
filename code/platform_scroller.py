@@ -32,24 +32,27 @@ import dialog
 
 from player import Player
 
+
 def show_help(screen):
     textcolor = (255, 255, 255)
     font = pygame.font.Font('resources/FreeMono.ttf', 18)
-    help_text = ["Help", "Move around    arrow keys",  "Use sword  space"]
-    for i,line in enumerate(help_text):
+    help_text = ["Help", "Move around    arrow keys", "Use sword  space"]
+    for i, line in enumerate(help_text):
         angle_display = font.render(line, 0, textcolor)
-        screen.blit(angle_display, (0, 18*i))
+        screen.blit(angle_display, (0, 18 * i))
+
 
 def print_msg(message, x, y, screen):
     txt = dialog.Dialog(x, y, message)
     txt.draw(screen)
+
 
 def main():
     """ Main Program """
     pygame.init()
     pygame.font.init()
     pygame.mixer.init()
-    #music = pygame.mixer.Sound("resources/DST-Arch-Delerium.ogg")
+    # music = pygame.mixer.Sound("resources/DST-Arch-Delerium.ogg")
     #music.play(loops=-1)
 
     # Set the height and width of the screen
@@ -62,8 +65,7 @@ def main():
     player = Player()
 
     # Create all the levels
-    level_list = []
-    level_list.append(levels.Level_01(player))
+    level_list = [levels.Level01(player)]
     #level_list.append(levels.Level_02(player))
 
     # Set the current level
@@ -85,9 +87,9 @@ def main():
 
     # -------- Main Program Loop -----------
     while not done:
-        for event in pygame.event.get(): # User did something
-            if event.type == pygame.QUIT: # If user clicked close
-                done = True # Flag that we are done so we exit this loop
+        for event in pygame.event.get():  # User did something
+            if event.type == pygame.QUIT:  # If user clicked close
+                done = True  # Flag that we are done so we exit this loop
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -129,7 +131,7 @@ def main():
         current_position = player.rect.x + current_level.world_shift
         if current_position < current_level.level_limit:
             player.rect.x = 120
-            if current_level_no < len(level_list)-1:
+            if current_level_no < len(level_list) - 1:
                 current_level_no += 1
                 current_level = level_list[current_level_no]
                 player.level = current_level
@@ -150,6 +152,7 @@ def main():
     # Be IDLE friendly. If you forget this line, the program will 'hang'
     # on exit.
     pygame.quit()
+
 
 if __name__ == "__main__":
     main()

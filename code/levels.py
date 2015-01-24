@@ -6,6 +6,7 @@ import thing
 
 from husband import Husband
 
+
 class Level():
     """ This is a generic super-class used to define a level.
         Create a child class for each level with level-specific
@@ -34,7 +35,7 @@ class Level():
         self.enemy_list = pygame.sprite.Group()
         self.player = player
 
-    def onetile(self, tile, y,x,passable):
+    def one_tile(self, tile, y, x, passable):
         return [tile, x*self.tileSize, y*self.tileSize, passable]
 
     def generate_tiles(self, txt):
@@ -47,18 +48,18 @@ class Level():
             for j in range(len(result[i])):
                 if txt[i][j] != ' ':
                     if txt[i][j] == '#':
-                        generated.append(self.onetile(platforms.WALL_SPRITE, i, j, False))
-                        t = self.onetile(platforms.WALL_SPRITE, i, j, False)
+                        generated.append(self.one_tile(platforms.WALL_SPRITE, i, j, False))
+                        t = self.one_tile(platforms.WALL_SPRITE, i, j, False)
                         block = platforms.Platform(t[0], t[1], t[2], self.player)
                         self.platform_list.add(block)
                     else:
                         # Put wallpaper behind other stuff
                         t = thing.Thing
-                        chosen_sprite = self.onetile(thing.WALLPAPER_SPRITE, i, j, self.player)
+                        chosen_sprite = self.one_tile(thing.WALLPAPER_SPRITE, i, j, self.player)
                         if txt[i][j] == 'l':
-                            chosen_sprite = self.onetile(thing.LADDER_SPRITE, i, j, self.player)
+                            chosen_sprite = self.one_tile(thing.LADDER_SPRITE, i, j, self.player)
                         elif txt[i][j] == 'w':
-                            chosen_sprite = self.onetile(thing.WINDOW_WALL_SPRITE, i, j, self.player)
+                            chosen_sprite = self.one_tile(thing.WINDOW_WALL_SPRITE, i, j, self.player)
                         elif txt[i][j] == 's':
                             chosen_sprite = [thing.WARDROBE_OPEN, j*self.tileSize, i*self.tileSize, self.player, thing.WARDROBE_CLOSED]
                             t = thing.Wardrobe
@@ -78,7 +79,6 @@ class Level():
 
         return generated
 
-
     # Update everythign on this level
     def update(self):
         """ Update everything in this level."""
@@ -93,7 +93,7 @@ class Level():
         # We don't shift the background as much as the sprites are shifted
         # to give a feeling of depth.
         screen.fill(constants.BLUE)
-        screen.blit(self.background,(self.world_shift // 3,0))
+        screen.blit(self.background, (self.world_shift // 3, 0))
 
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
@@ -110,8 +110,8 @@ class Level():
         for platform in self.platform_list:
             platform.rect.x += shift_x
 
-        for thing in self.thing_list:
-            thing.rect.x += shift_x
+        for the_thing in self.thing_list:
+            the_thing.rect.x += shift_x
 
         for enemy in self.enemy_list:
             enemy.rect.x += shift_x
@@ -127,9 +127,8 @@ class Level():
                     door_dict[i.door_number] = i
 
 
-
 # Create platforms for the level
-class Level_01(Level):
+class Level01(Level):
     """ Definition for level 1. """
 
     def __init__(self, player):
@@ -138,11 +137,11 @@ class Level_01(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("background_01.png").convert()
+        self.background = pygame.image.load("img/background_01.png").convert()
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500
 
-        txt="""
+        txt = """
  ##################
  #................#
  #..s..1......2...#
@@ -151,7 +150,7 @@ class Level_01(Level):
  #b...1..D.c.2.....
  ##################"""
 
-        level = self.generate_tiles(txt)#+level
+        level = self.generate_tiles(txt)  # +level
 
         # Add a custom moving platform
         block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE, 1350, 280, self.player)
@@ -171,8 +170,9 @@ class Level_01(Level):
         husband.player = player
         self.enemy_list.add(husband)
 
+
 # Create platforms for the level
-class Level_02(Level):
+class Level02(Level):
     """ Definition for level 2. """
 
     def __init__(self, player):
@@ -181,7 +181,7 @@ class Level_02(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("background_02.png").convert()
+        self.background = pygame.image.load("img/background_02.png").convert()
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -1000
 
@@ -199,7 +199,6 @@ class Level_02(Level):
                   [platforms.STONE_PLATFORM_MIDDLE, 1190, 280],
                   [platforms.STONE_PLATFORM_RIGHT, 1260, 280],
                   ]
-
 
         # Go through the array above and add platforms
         for platform in level:

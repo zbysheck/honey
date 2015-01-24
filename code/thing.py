@@ -40,7 +40,7 @@ class Thing(pygame.sprite.Sprite):
             code. """
         pygame.sprite.Sprite.__init__(self)
 
-        sprite_sheet = SpriteSheet("things_spritesheet2.png")
+        sprite_sheet = SpriteSheet("img/things_spritesheet2.png")
         # Grab the image for this platform
         self.image = sprite_sheet.get_image(sprite_sheet_data[0],
                                             sprite_sheet_data[1],
@@ -81,7 +81,7 @@ class Wardrobe(Thing):
         super(Wardrobe, self).__init__(sprite_sheet_data, x, y, player)
         self.hidden = False
         self.open_image = self.image
-        sprite_sheet = SpriteSheet("things_spritesheet2.png")
+        sprite_sheet = SpriteSheet("img/things_spritesheet2.png")
         self.closed_image = sprite_sheet.get_image(*closed_image)
         self.last_change = time.time()
 
@@ -105,7 +105,7 @@ class Door(Thing):
         super(Door, self).__init__(sprite_sheet_data, x, y, player)
         self.open = False
         self.closed_image = self.image
-        sprite_sheet = SpriteSheet("things_spritesheet2.png")
+        sprite_sheet = SpriteSheet("img/things_spritesheet2.png")
         self.open_image = sprite_sheet.get_image(*open_image)
         self.last_change = time.time()
 

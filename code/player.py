@@ -9,6 +9,7 @@ import constants
 from platforms import MovingPlatform
 from spritesheet_functions import SpriteSheet
 
+
 class Player(pygame.sprite.Sprite):
     """ This class represents the bar at the bottom that the player
     controls. """
@@ -24,10 +25,9 @@ class Player(pygame.sprite.Sprite):
     saved_x = None
     saved_y = None
 
-
     PL_WIDTH = 31
     PL_HEIGHT = 61
-    PL_MARGIN=8
+    PL_MARGIN = 8
 
     # This holds all the images for the animated walk left/right
     # of our player
@@ -49,20 +49,23 @@ class Player(pygame.sprite.Sprite):
         # Call the parent's constructor
         pygame.sprite.Sprite.__init__(self)
 
-        sprite_sheet = SpriteSheet("player.png")
+        sprite_sheet = SpriteSheet("img/player.png")
         # Load all the right facing images into a list
 
         for i in range(7):
-            image = sprite_sheet.get_image(i * self.PL_WIDTH, 3 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
+            image = sprite_sheet.get_image(i * self.PL_WIDTH, 3 * self.PL_HEIGHT, self.PL_WIDTH,
+                                           self.PL_HEIGHT - self.PL_MARGIN)
             self.walking_frames_r.append(image)
         for i in range(7):
-            image = sprite_sheet.get_image(i * self.PL_WIDTH, 2 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
+            image = sprite_sheet.get_image(i * self.PL_WIDTH, 2 * self.PL_HEIGHT, self.PL_WIDTH,
+                                           self.PL_HEIGHT - self.PL_MARGIN)
             self.walking_frames_l.append(image)
         for i in range(7):
-            image = sprite_sheet.get_image(i * self.PL_WIDTH, self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
+            image = sprite_sheet.get_image(i * self.PL_WIDTH, self.PL_HEIGHT, self.PL_WIDTH,
+                                           self.PL_HEIGHT - self.PL_MARGIN)
             self.walking_frames_u.append(image)
         for i in range(7):
-            image = sprite_sheet.get_image(i * self.PL_WIDTH, 0, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
+            image = sprite_sheet.get_image(i * self.PL_WIDTH, 0, self.PL_WIDTH, self.PL_HEIGHT - self.PL_MARGIN)
             self.walking_frames_d.append(image)
 
         # Set the image the player starts with
