@@ -57,6 +57,9 @@ class Level():
                             chosen_sprite = self.onetile(thing.LADDER_SPRITE, i, j, self.player)
                         elif txt[i][j] == 'w':
                             chosen_sprite = self.onetile(thing.WINDOW_WALL_SPRITE, i, j, self.player)
+                        elif txt[i][j] == 's':
+                            chosen_sprite = [thing.WARDROBE_OPEN, j*self.tileSize, i*self.tileSize, self.player, thing.WARDROBE_CLOSED]
+                            t = thing.Wardrobe
                         elif txt[i][j].isdigit():
                             chosen_sprite = [thing.STAIR_SPRITE, j*self.tileSize, i*self.tileSize, self.player, txt[i][j]]
                             t = thing.Staircase
@@ -134,7 +137,7 @@ class Level_01(Level):
         txt="""
  ##################
  #................#
- #.....1......2...#
+ #..s..1......2...#
  ##################
  #.......#........#
  #b...1..D...2.....
