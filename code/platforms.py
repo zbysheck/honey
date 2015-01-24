@@ -109,6 +109,7 @@ class Husband(pygame.sprite.Sprite):
     # Set speed vector of player
     change_x = 0
     change_y = 0
+    pos = 0
 
     # This holds all the images for the animated walk left/right of our player
     walking_frames_l = []
@@ -172,6 +173,13 @@ class Husband(pygame.sprite.Sprite):
 
     def update(self):
         print str(time.time()) + "\t" + "updating.."
+
         self.rect.x = self.rect.x + 1
-        self.change_x = 0
-        self.change_y = 0
+        self.pos = self.pos + 4
+
+        if self.direction == "R":
+            frame = (self.pos // 30) % len(self.walking_frames_r)
+            self.image = self.walking_frames_r[frame]
+        else:
+            frame = (self.pos // 30) % len(self.walking_frames_l)
+            self.image = self.walking_frames_l[frame]
