@@ -126,6 +126,8 @@ class Husband(pygame.sprite.Sprite):
     # What direction is the player facing?
     direction = "R"
 
+    player = None
+
     def __init__(self):
         super(Husband, self).__init__()
 
@@ -165,3 +167,7 @@ class Husband(pygame.sprite.Sprite):
         else:
             frame = (self.pos // 30) % len(self.walking_frames_l)
             self.image = self.walking_frames_l[frame]
+
+        hit = pygame.sprite.collide_rect(self, self.player)
+        if hit:
+            print "collision!"
