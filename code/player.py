@@ -45,10 +45,6 @@ class Player(pygame.sprite.Sprite):
         sprite_sheet = SpriteSheet("player.png")
         # Load all the right facing images into a list
 
-#         myList=[]
-# for i in range(10):
-#  myList.append(1)
-        ####
         for i in range(7):
             image = sprite_sheet.get_image(i * self.PL_WIDTH, 3 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
             self.walking_frames_r.append(image)
