@@ -115,8 +115,8 @@ class Husband(pygame.sprite.Sprite):
     change_y = 0
     sprite_frame_frequency = 4
 
-    PL_WIDTH = 64.5
-    PL_HEIGHT = 64.5
+    PL_WIDTH = 64
+    PL_HEIGHT = 64
     PL_MARGIN = 0
 
     # This holds all the images for the animated walk left/right of our player
@@ -133,8 +133,8 @@ class Husband(pygame.sprite.Sprite):
     def __init__(self):
         super(Husband, self).__init__()
 
-        self.change_x = 1;
-        self.change_y = 0;
+        self.change_x = 1
+        self.change_y = 0
 
         sprite_sheet = SpriteSheet("husband.png")
 
