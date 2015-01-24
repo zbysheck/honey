@@ -23,6 +23,7 @@ LADDER_SPRITE         = (504, 144, 70, 70)
 WALLPAPER_SPRITE      = (504, 0, 70, 70)
 WINDOW_WALL_SPRITE    = (504, 359, 70, 70)
 STAIR_SPRITE           = (648, 288, 70, 70)
+BED                   = (72, 432, 70, 70)
 
 class Thing(pygame.sprite.Sprite):
     """ Platform the user can jump on """
