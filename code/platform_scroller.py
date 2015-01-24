@@ -28,6 +28,7 @@ import pygame
 
 import constants
 import levels
+import dialog
 
 from player import Player
 
@@ -38,6 +39,10 @@ def show_help(screen):
     for i,line in enumerate(help_text):
         angle_display = font.render(line, 0, textcolor)
         screen.blit(angle_display, (0, 18*i))
+
+def print_msg(message, x, y, screen):
+    txt = dialog.Dialog(x, y, message)
+    txt.draw(screen)
 
 def main():
     """ Main Program """
@@ -133,6 +138,7 @@ def main():
         current_level.draw(screen)
         active_sprite_list.draw(screen)
         show_help(screen)
+        print_msg("What do we do now?", 100, 200, screen)
         # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 
         # Limit to 60 frames per second
