@@ -111,9 +111,15 @@ class Husband(pygame.sprite.Sprite):
     change_y = 0
     pos = 0
 
+    PL_WIDTH = 64.5
+    PL_HEIGHT = 64.5
+    PL_MARGIN = 0
+
     # This holds all the images for the animated walk left/right of our player
     walking_frames_l = []
     walking_frames_r = []
+    walking_frames_u = []
+    walking_frames_d = []
 
     # What direction is the player facing?
     direction = "R"
@@ -124,49 +130,26 @@ class Husband(pygame.sprite.Sprite):
         # Call the parent's constructor
         pygame.sprite.Sprite.__init__(self)
 
-        sprite_sheet = SpriteSheet("p2_walk.png")
-        # Load all the right facing images into a list
-        image = sprite_sheet.get_image(0, 0, 66, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(66, 0, 66, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(132, 0, 67, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(0, 93, 66, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(66, 93, 66, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(132, 93, 72, 90)
-        self.walking_frames_r.append(image)
-        image = sprite_sheet.get_image(0, 186, 70, 90)
-        self.walking_frames_r.append(image)
+        sprite_sheet = SpriteSheet("husband.png")
 
-        # Load all the right facing images, then flip them
-        # to face left.
-        image = sprite_sheet.get_image(0, 0, 66, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(66, 0, 66, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(132, 0, 67, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(0, 93, 66, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(66, 93, 66, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(132, 93, 72, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
-        image = sprite_sheet.get_image(0, 186, 70, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.walking_frames_l.append(image)
+        ####
+        for i in range(9):
+            image = sprite_sheet.get_image(i * self.PL_WIDTH, 3 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
+            self.walking_frames_r.append(image)
+        for i in range(9):
+            image = sprite_sheet.get_image(i * self.PL_WIDTH, self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
+            self.walking_frames_l.append(image)
+        for i in range(9):
+            image = sprite_sheet.get_image(i * self.PL_WIDTH, 0, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
+            self.walking_frames_u.append(image)
+        for i in range(9):
+            image = sprite_sheet.get_image(i * self.PL_WIDTH, 2 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
+            self.walking_frames_d.append(image)
+        ####
+
 
         # Set the image the player starts with
-        self.image = self.walking_frames_r[0]
+        self.image = self.walking_frames_l[0]
 
         # Set a referance to the image rect.
         self.rect = self.image.get_rect()
