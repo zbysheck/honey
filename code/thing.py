@@ -27,6 +27,9 @@ STAIR_SPRITE           = (648, 288, 70, 70)
 BED                   = (72, 432, 70, 70)
 WARDROBE_OPEN         = (0, 0, 70, 70)
 WARDROBE_CLOSED       = (0, 71, 70, 70)
+DOOR_OPEN         = (0, 71, 70, 70)
+DOOR_CLOSED       = (0, 0, 70, 70)
+SOCK              = (0, 0, 70, 70)
 
 class Thing(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -94,3 +97,25 @@ class Wardrobe(Thing):
                 self.player.hide()
                 self.hidden = True
             self.last_change = time.time()
+
+
+class Door(Thing):
+    """ Door opens when you touch it and stays open """
+    def __init__(self, sprite_sheet_data, x, y, player, open_image):
+        super(Door, self).__init__(sprite_sheet_data, x, y, player)
+        self.open = False
+        self.closed_image = self.image
+        sprite_sheet = SpriteSheet("things_spritesheet2.png")
+        self.open_image = sprite_sheet.get_image(*open_image)
+        self.last_change = time.time()
+
+    def update(self):
+        hit = pygame.sprite.collide_rect(self, self.player)
+        if hit and not self.open:
+            self.image = self.open_image
+
+
+class Clothing(ActionObject):
+    """ Clothing disappears when you pick it up """
+    def do_action(self):
+        self.kill()
