@@ -96,7 +96,7 @@ class Level():
         screen.blit(self.background, (self.world_shift // 3, 0))
 
         # Draw wallpaper
-        pygame.draw.polygon(screen, (255, 255, 0), self.wallpaper_points)
+        pygame.draw.polygon(screen, (189, 140, 191), self.wallpaper_points)
 
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
