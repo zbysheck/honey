@@ -19,7 +19,8 @@ STONE_PLATFORM_LEFT   = (432, 720, 70, 40)
 STONE_PLATFORM_MIDDLE = (648, 648, 70, 40)
 STONE_PLATFORM_RIGHT  = (792, 648, 70, 40)
 WALL_SPRITE           = (504, 288, 70, 70)
-LADDER_SPRITE         = (0, 0, 70, 70)
+LADDER_SPRITE         = (504, 144, 70, 70)
+WALLPAPER_SPRITE      = (504, 0, 70, 70)
 
 class Thing(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -30,7 +31,7 @@ class Thing(pygame.sprite.Sprite):
             code. """
         pygame.sprite.Sprite.__init__(self)
 
-        sprite_sheet = SpriteSheet("things_spritesheet.png")
+        sprite_sheet = SpriteSheet("things_spritesheet2.png")
         # Grab the image for this platform
         self.image = sprite_sheet.get_image(sprite_sheet_data[0],
                                             sprite_sheet_data[1],

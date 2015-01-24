@@ -43,10 +43,15 @@ class Level():
             result.append(list(i))
         for i in range(len(result)):
             for j in range(len(result[i])):
-                if txt[i][j]=='#':
-                    generated.append(self.onetile(platforms.WALL_SPRITE, i, j, False))
-                elif txt[i][j]=='l':
-                    generated.append(self.onetile(thing.LADDER_SPRITE, i, j, True))
+                if txt[i][j] != ' ':
+                    if txt[i][j] == '#':
+                        generated.append(self.onetile(platforms.WALL_SPRITE, i, j, False))
+                    else:
+                        generated.append(self.onetile(thing.WALLPAPER_SPRITE, i, j, True))
+                        if txt[i][j] == 'l':
+                            generated.append(self.onetile(thing.LADDER_SPRITE, i, j, True))
+                        elif txt[i][j] == 'w':
+                            generated.append(self.onetile(thing.LADDER_SPRITE, i, j, True))
         return generated
 
 
@@ -116,15 +121,15 @@ class Level_01(Level):
                   [platforms.STONE_PLATFORM_RIGHT, 1260, 280],
                   ]
 
-        txt="""#########
-#.l.....#
-#.......#
-######.###
-#.......#
-#........
-#........
-#l.......
-#########"""
+        txt="""
+ #########
+ #.......#
+ #.......#
+ ######l###########
+ #.....l.#........#
+ #.....l..........#
+ #.....l...........
+ ##################"""
 
         level = self.generate_tiles(txt)#+level
 
