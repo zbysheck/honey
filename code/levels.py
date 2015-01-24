@@ -4,6 +4,8 @@ import constants
 import platforms
 import thing
 
+from husband import Husband
+
 class Level():
     """ This is a generic super-class used to define a level.
         Create a child class for each level with level-specific
@@ -157,7 +159,7 @@ class Level_01(Level):
         self.platform_list.add(block)
 
         # Add husband
-        husband = platforms.Husband()
+        husband = Husband()
         husband.rect.x = 200
         husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
         husband.player = player
