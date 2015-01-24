@@ -134,7 +134,6 @@ class Husband(pygame.sprite.Sprite):
 
         sprite_sheet = SpriteSheet("husband.png")
 
-        ####
         for i in range(9):
             image = sprite_sheet.get_image(i * self.PL_WIDTH, 3 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
             self.walking_frames_r.append(image)
@@ -147,17 +146,15 @@ class Husband(pygame.sprite.Sprite):
         for i in range(9):
             image = sprite_sheet.get_image(i * self.PL_WIDTH, 2 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
             self.walking_frames_d.append(image)
-        ####
-
 
         # Set the image the player starts with
         self.image = self.walking_frames_l[0]
 
-        # Set a referance to the image rect.
+        # Set a reference to the image rect.
         self.rect = self.image.get_rect()
 
     def update(self):
-        print str(time.time()) + "\t" + "updating.."
+        print str(time.time()) + "\t" + "updating " + "x=" + str(self.rect.x) + " y=" + str(self.rect.y)
 
         self.rect.x = self.rect.x + 1
         self.pos = self.pos + 4
