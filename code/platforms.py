@@ -131,8 +131,8 @@ class Husband(pygame.sprite.Sprite):
     def __init__(self):
         super(Husband, self).__init__()
 
-        self.change_x = 1;
-        self.change_y = 0;
+        self.change_x = 1
+        self.change_y = 0
 
         sprite_sheet = SpriteSheet("husband.png")
 

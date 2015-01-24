@@ -44,8 +44,8 @@ def main():
     pygame.init()
     pygame.font.init()
     pygame.mixer.init()
-    music = pygame.mixer.Sound("resources/DST-Arch-Delerium.ogg")
-    music.play(loops=-1)
+    #music = pygame.mixer.Sound("resources/DST-Arch-Delerium.ogg")
+    #music.play(loops=-1)
 
     # Set the height and width of the screen
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
