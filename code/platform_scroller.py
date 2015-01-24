@@ -138,7 +138,7 @@ def main():
         current_level.draw(screen)
         active_sprite_list.draw(screen)
         show_help(screen)
-        print_msg("What do we do now?", 100, 200, screen)
+        print_msg("What do we do now?", 100, 100, screen)
         # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 
         # Limit to 60 frames per second

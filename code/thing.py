@@ -30,7 +30,7 @@ WARDROBE_CLOSED       = (144, 360, 70, 70)
 WARDROBE_CLOSED2       = (217, 360, 69, 70)
 DOOR_OPEN         = (0, 71, 70, 70)
 DOOR_CLOSED       = (0, 0, 70, 70)
-SOCK              = (0, 0, 70, 70)
+SOCK              = (72, 0, 70, 70)
 
 class Thing(pygame.sprite.Sprite):
     """ Platform the user can jump on """
