@@ -21,6 +21,10 @@ class Player(pygame.sprite.Sprite):
     change_x = 0
     change_y = 0
 
+    saved_x = None
+    saved_y = None
+
+
     PL_WIDTH = 31
     PL_HEIGHT = 61
     PL_MARGIN=8
@@ -163,3 +167,10 @@ class Player(pygame.sprite.Sprite):
 
     def disable_movement(self):
         self._enabled = False
+
+    def show(self):
+        self.add(self.sprite_list)
+        print "SHOW"
+
+    def hide(self):
+        self.kill()

@@ -1,6 +1,7 @@
 """
 Module for managing platforms.
 """
+import time
 import pygame
 
 from spritesheet_functions import SpriteSheet
@@ -24,6 +25,8 @@ WALLPAPER_SPRITE      = (504, 0, 70, 70)
 WINDOW_WALL_SPRITE    = (504, 359, 70, 70)
 STAIR_SPRITE           = (648, 288, 70, 70)
 BED                   = (72, 432, 70, 70)
+WARDROBE_OPEN         = (0, 0, 70, 70)
+WARDROBE_CLOSED       = (0, 71, 70, 70)
 
 class Thing(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -67,3 +70,27 @@ class Staircase(ActionObject):
     def do_action(self):
         self.player.rect.x = self.paired_door.rect.x
         self.player.rect.y = self.paired_door.rect.y
+
+
+class Wardrobe(Thing):
+
+    def __init__(self, sprite_sheet_data, x, y, player, closed_image):
+        super(Wardrobe, self).__init__(sprite_sheet_data, x, y, player)
+        self.hidden = False
+        self.open_image = self.image
+        sprite_sheet = SpriteSheet("things_spritesheet2.png")
+        self.closed_image = sprite_sheet.get_image(*closed_image)
+        self.last_change = time.time()
+
+    def update(self):
+        hit = pygame.sprite.collide_rect(self, self.player)
+        if hit and not self.player._enabled and time.time() - self.last_change > 1:
+            if self.hidden:
+                self.image = self.open_image
+                self.player.show()
+                self.hidden = False
+            else:
+                self.image = self.closed_image
+                self.player.hide()
+                self.hidden = True
+            self.last_change = time.time()
