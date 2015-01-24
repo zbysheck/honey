@@ -119,8 +119,13 @@ class Door(Thing):
 
     def update(self):
         hit = pygame.sprite.collide_rect(self, self.player)
+        print("hit: " + str(hit) + "  isOpen: " + str (self.open))
         if hit and not self.open:
             self.image = self.open_image
+            self.open = True
+        elif not hit and self.open:
+            self.image = self.closed_image
+            self.open = False
 
 
 class Clothing(ActionObject):
