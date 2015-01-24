@@ -22,11 +22,12 @@ WALL_SPRITE           = (504, 288, 70, 70)
 LADDER_SPRITE         = (504, 144, 70, 70)
 WALLPAPER_SPRITE      = (504, 0, 70, 70)
 WINDOW_WALL_SPRITE    = (504, 359, 70, 70)
+STAIR_SPRITE           = (648, 288, 70, 70)
 
 class Thing(pygame.sprite.Sprite):
     """ Platform the user can jump on """
 
-    def __init__(self, sprite_sheet_data):
+    def __init__(self, sprite_sheet_data, x, y, player):
         """ Platform constructor. Assumes constructed with user passing in
             an array of 5 numbers like what's defined at the top of this
             code. """
@@ -40,4 +41,28 @@ class Thing(pygame.sprite.Sprite):
                                             sprite_sheet_data[3])
 
         self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.player = player
 
+
+class ActionObject(Thing):
+    def do_action(self):
+        raise NotImplementedError()
+
+    def update(self):
+        hit = pygame.sprite.collide_rect(self, self.player)
+        if hit and not self.player._enabled:
+            self.do_action()
+            self.player.enable_movement()
+
+
+class Staircase(ActionObject):
+    def __init__(self, sprite_sheet_data, x, y, player, door_number):
+        super(Staircase, self).__init__(sprite_sheet_data, x, y, player)
+        self.door_number = door_number
+        self.paired_door = None
+
+    def do_action(self):
+        self.player.rect.x = self.paired_door.rect.x
+        self.player.rect.y = self.paired_door.rect.y

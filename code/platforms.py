@@ -24,7 +24,7 @@ WALL_SPRITE           = (504, 288, 70, 70)
 class Platform(pygame.sprite.Sprite):
     """ Platform the user can jump on """
 
-    def __init__(self, sprite_sheet_data):
+    def __init__(self, sprite_sheet_data, x, y, player):
         """ Platform constructor. Assumes constructed with user passing in
             an array of 5 numbers like what's defined at the top of this
             code. """
@@ -38,7 +38,9 @@ class Platform(pygame.sprite.Sprite):
                                             sprite_sheet_data[3])
 
         self.rect = self.image.get_rect()
-
+        self.rect.x = x
+        self.rect.y = y
+        self.player = player
 
 
 class MovingPlatform(Platform):

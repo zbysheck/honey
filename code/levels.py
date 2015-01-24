@@ -14,7 +14,7 @@ class Level():
     platform_list = None
     enemy_list = None
     thing_list = None
-
+    door_list = {}
     tileSize = 70
 
     # Background image
@@ -46,13 +46,25 @@ class Level():
                 if txt[i][j] != ' ':
                     if txt[i][j] == '#':
                         generated.append(self.onetile(platforms.WALL_SPRITE, i, j, False))
+                        t = self.onetile(platforms.WALL_SPRITE, i, j, False)
+                        block = platforms.Platform(t[0], t[1], t[2], self.player)
+                        self.platform_list.add(block)
                     else:
                         # Put wallpaper behind other stuff
-                        generated.append(self.onetile(thing.WALLPAPER_SPRITE, i, j, True))
+                        t = thing.Thing
+                        chosen_sprite = self.onetile(thing.WALLPAPER_SPRITE, i, j, self.player)
                         if txt[i][j] == 'l':
-                            generated.append(self.onetile(thing.LADDER_SPRITE, i, j, True))
+                            chosen_sprite = self.onetile(thing.LADDER_SPRITE, i, j, self.player)
                         elif txt[i][j] == 'w':
-                            generated.append(self.onetile(thing.WINDOW_WALL_SPRITE, i, j, True))
+                            chosen_sprite = self.onetile(thing.WINDOW_WALL_SPRITE, i, j, self.player)
+                        elif txt[i][j].isdigit():
+                            chosen_sprite = [thing.STAIR_SPRITE, j*self.tileSize, i*self.tileSize, self.player, txt[i][j]]
+                            t = thing.Staircase
+                        if chosen_sprite:
+                            block = t(*chosen_sprite)
+                            self.thing_list.add(block)
+                            self.match_doors()
+
         return generated
 
 
@@ -93,6 +105,18 @@ class Level():
         for enemy in self.enemy_list:
             enemy.rect.x += shift_x
 
+    def match_doors(self):
+        door_dict = {}
+        for i in self.thing_list:
+            if isinstance(i, thing.Staircase):
+                if i.door_number in door_dict:
+                    i.paired_door = door_dict[i.door_number]
+                    door_dict[i.door_number].paired_door = i
+                else:
+                    door_dict[i.door_number] = i
+
+
+
 # Create platforms for the level
 class Level_01(Level):
     """ Definition for level 1. """
@@ -107,51 +131,20 @@ class Level_01(Level):
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500
 
-        # Array with type of platform, and x, y location of the platform.
-        level = [ [platforms.GRASS_LEFT, 500, 500],
-                  [platforms.GRASS_MIDDLE, 570, 500],
-                  [platforms.GRASS_RIGHT, 640, 500],
-                  [platforms.GRASS_LEFT, 800, 400],
-                  [platforms.GRASS_MIDDLE, 870, 400],
-                  [platforms.GRASS_RIGHT, 940, 400],
-                  [platforms.GRASS_LEFT, 1000, 500],
-                  [platforms.GRASS_MIDDLE, 1070, 500],
-                  [platforms.GRASS_RIGHT, 1140, 500],
-                  [platforms.STONE_PLATFORM_LEFT, 1120, 280],
-                  [platforms.STONE_PLATFORM_MIDDLE, 1190, 280],
-                  [platforms.STONE_PLATFORM_RIGHT, 1260, 280],
-                  ]
-
         txt="""
  #########
  #.......#
- #.......#
- ######l###########
- #.....l.#........#
- #.....l..........#
- #.....l......w....
+ #.....1.#
+ ##################
+ #.......#........#
+ #................#
+ #.....1......w....
  ##################"""
 
         level = self.generate_tiles(txt)#+level
 
-
-
-        # Go through the array above and add platforms
-        for platform in level:
-            if platform[3]:
-                block = thing.Thing(platform[0])
-            else:
-                block = platforms.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2]
-            block.player = self.player
-            if platform[3]:
-                self.thing_list.add(block)
-            else:
-                self.platform_list.add(block)
-
         # Add a custom moving platform
-        block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
+        block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE, 1350, 280, self.player)
         block.rect.x = 1350
         block.rect.y = 280
         block.boundary_left = 1350
@@ -200,14 +193,11 @@ class Level_02(Level):
 
         # Go through the array above and add platforms
         for platform in level:
-            block = platforms.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2]
-            block.player = self.player
+            block = platforms.Platform(platform[0], platform[1], platform[2], self.player)
             self.platform_list.add(block)
 
         # Add a custom moving platform
-        block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
+        block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE, 1500, 300, self.player)
         block.rect.x = 1500
         block.rect.y = 300
         block.boundary_top = 100
