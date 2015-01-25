@@ -81,7 +81,10 @@ class Husband(pygame.sprite.Sprite):
         width   = self._suspicion_value
         height  = 20
 
+        # frame
         pygame.draw.rect(screen, black, (x - 5, y - 5, 99 + 10, height + 10))
+
+        # suspicion meter
         pygame.draw.rect(screen, red, (x, y, width, height))
 
     def _update_suspicion_meter(self):
@@ -121,9 +124,13 @@ class Husband(pygame.sprite.Sprite):
             block.rect.x = self.rect.x - width
             block.rect.y = self.rect.y
 
-        # detect collision
+        # check if player is in the husband sight
         if pygame.sprite.collide_rect(block, self.player):
-            print "collision!"
+            print "I see you!!!"
+
+        # check if husband caught player
+        if pygame.sprite.collide_rect(self, self.player):
+            print "I got you!!!"
             pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 5}))
 
     def _ai(self):
