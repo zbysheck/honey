@@ -173,9 +173,6 @@ class Level01(Level):
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500
 
-        self.husband.rect.x = 1200
-        self.husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
-
         txt = """
  ########################################
  #2. .D....s. 3.D    4   #       s     7#

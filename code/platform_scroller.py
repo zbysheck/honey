@@ -76,6 +76,8 @@ def main():
 
     # Add husband
     husband = Husband()
+    husband.rect.x = 1100
+    husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
     husband.player = player
 
 
