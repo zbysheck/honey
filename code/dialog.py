@@ -11,7 +11,7 @@ class Dialog:
         self.x = x
         self.y = y
         self.message = message
-        self.bubble = pygame.Rect(x, y, 32 * len(message), 44)
+        self.bubble = pygame.Rect(x, y, 32 * len(message) + 16, 44)
 
     def draw(self, surface):
         pygame.draw.rect(surface, (255, 255, 255), self.bubble, 0)

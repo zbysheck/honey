@@ -177,19 +177,19 @@ class Level01(Level):
         self.husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
 
         txt = """
- #####################################
- #2. D....s. 3.D   4  #       s     7#
- ######################    ###########
- #2.c#.1..s. 3.#5       6 ##     #  7#
+   ##################################
+   #2D....s. 3.D   4  #       s    7#
+  #####################    ###########
+  #c2#.1..s. 3.#5       6 ##     # 7 #
  ########################## z     ######
- #b..  1..D.c.  5D 4.c#.6.D.....  D.....
+ #b..  1..D.c.  5D 4.c .6.D.....  D....f
  #######################################"""
 
         level = self.generate_tiles(txt)  # +level
 
         # init wallpaper boundaries
         #self.wallpaper_points += [[1, 1], [16, 1], [16, 4], [18, 4], [18, 7], [1, 7]]
-        self.wallpaper_points += [[1, 1], [66, 1], [66, 7], [1, 7]]
+        self.wallpaper_points += [[3, 1], [36, 1], [36, 3], [37, 3], [38, 6], [39, 6], [39, 7], [1, 7], [1, 5], [3, 5]]
         self.translate_wallpaper()
         self.wallpaper_color = (189, 140, 191)
 
