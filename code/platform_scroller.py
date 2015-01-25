@@ -77,9 +77,9 @@ def main():
     bad_guys = []
 
     # Add husband
-    husband = Husband([0, 500])
+    husband = Husband([0, 420])
     husband.rect.x = 1100
-    husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
+    husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 240
     husband.player = player
     bad_guys.append(husband)
 
@@ -87,6 +87,20 @@ def main():
     guard = Husband([0, 200])
     guard.rect.x = 2100
     guard.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
+    guard.player = player
+    bad_guys.append(guard)
+
+    # Add guard
+    guard = Husband([0, 350])
+    guard.rect.x = 1200
+    guard.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
+    guard.player = player
+    bad_guys.append(guard)
+
+    # Add guard
+    guard = Husband([0, 350])
+    guard.rect.x = 1200
+    guard.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 30
     guard.player = player
     bad_guys.append(guard)
 
