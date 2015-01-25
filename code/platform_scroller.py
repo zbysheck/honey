@@ -84,6 +84,13 @@ def main():
     bad_guys.append(husband)
 
     # Add guard
+    guard = Husband("guard 0", [0, 420], "img/husband2.png")
+    guard.rect.x = 2310
+    guard.rect.y = constants.SCREEN_HEIGHT - guard.rect.height - 380
+    guard.player = player
+    bad_guys.append(guard)
+
+    # Add guard
     guard = Husband("guard 1", [0, 560], "img/husband2.png")
     guard.rect.x = 1100
     guard.rect.y = constants.SCREEN_HEIGHT - guard.rect.height - 380
