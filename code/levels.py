@@ -192,6 +192,14 @@ class Level01(Level):
         block.level = self
         self.platform_list.add(block)
 
+        # Add husband
+        husband = Husband()
+        husband.rect.x = 200
+        husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
+        husband.player = player
+        self.enemy_list.add(husband)
+
+
 # Create platforms for the level
 class Level02(Level):
     """ Definition for level 2. """

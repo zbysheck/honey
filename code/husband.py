@@ -9,6 +9,24 @@ import time
 
 from spritesheet_functions import SpriteSheet
 
+class Block(pygame.sprite.Sprite):
+
+    # Constructor. Pass in the color of the block,
+    # and its x and y position
+    def __init__(self, width, height):
+       # Call the parent class (Sprite) constructor
+       pygame.sprite.Sprite.__init__(self)
+
+       # Create an image of the block, and fill it with a color.
+       # This could also be an image loaded from the disk.
+       self.image = pygame.Surface([width, height])
+       color = pygame.Color(255, 0, 0 , 0);
+       self.image.fill(color)
+
+       # Fetch the rectangle object that has the dimensions of the image
+       # Update the position of this object by setting the values of rect.x and rect.y
+       self.rect = self.image.get_rect()
+
 
 class Husband(pygame.sprite.Sprite):
     """ This class represents the bar at the bottom that the player
@@ -18,9 +36,9 @@ class Husband(pygame.sprite.Sprite):
     # Set speed vector of player
     change_x = 0
     change_y = 0
-    x0 = 0
+    x0 = 500
     y0 = 0
-    direction = "R"
+    direction = "L"
     sprite_frame_frequency = 4
 
     PL_WIDTH = 64
@@ -38,7 +56,7 @@ class Husband(pygame.sprite.Sprite):
     def __init__(self):
         super(Husband, self).__init__()
 
-        self.change_x = 1
+        self.change_x = -1
         self.change_y = 0
 
         sprite_sheet = SpriteSheet("img/husband.png")
@@ -83,15 +101,28 @@ class Husband(pygame.sprite.Sprite):
         self.change_y = y
 
     def _collision_detection(self):
-        hit = pygame.sprite.collide_rect(self, self.player)
-        if hit:
+        # husband sight range simulated by rectangle with given size
+        width = 100
+        height = 70
+        block = Block(width, height)
+
+        # compute sight rectangle coordinates in order to detect whether player has been seen or not
+        if self.direction == "R":
+            block.rect.x = self.rect.x + width
+            block.rect.y = self.rect.y
+        elif self.direction == "L":
+            block.rect.x = self.rect.x - width
+            block.rect.y = self.rect.y
+
+        # detect collision
+        if pygame.sprite.collide_rect(block, self.player):
             print "collision!"
             pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 5}))
 
     def _ai(self):
         self._update_position()
 
-        if self.x0 > 350:
+        if self.x0 > 500:
             self.direction = "L"
             self._set_direction(-1, 0)
         elif self.x0 < 0:
