@@ -90,7 +90,7 @@ class Husband(pygame.sprite.Sprite):
         pygame.draw.rect(screen, red, (x, y, width, height))
 
     def _increase_suspicion_meter(self, value):
-        if (self._suspicion_delay % 10 == 0):
+        if (self._suspicion_delay % 5 == 0):
 
             if ((self._suspicion_value + value) >= 100):
                 self._suspicion_value = 100
@@ -100,7 +100,7 @@ class Husband(pygame.sprite.Sprite):
         self._suspicion_delay += 1
 
     def _decrease_suspicion_meter(self, value):
-        if (self._suspicion_delay % 10 == 0):
+        if (self._suspicion_delay % 5 == 0):
 
             if ((self._suspicion_value - value) < 0):
                 self._suspicion_value = 0
