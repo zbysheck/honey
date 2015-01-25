@@ -59,7 +59,7 @@ class Husband(pygame.sprite.Sprite):
         self._walking_frames_l = []
         self._walking_frames_r = []
         self._patrol_zone = []
-        self._enabled = False
+        self._enabled = True
         self._patrol_zone = patrol_zone
 
         sprite_sheet = SpriteSheet(sprite_img_path)
