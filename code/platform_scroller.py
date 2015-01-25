@@ -27,6 +27,7 @@ http://opengameart.org/content/platformer-art-deluxe
 import pygame
 
 import time
+from pygame.constants import FULLSCREEN
 import constants
 from husband import Husband
 import levels
@@ -64,6 +65,9 @@ def main():
     # Set the height and width of the screen
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
+    flags = screen.get_flags()
+    flags = flags|FULLSCREEN
+    screen = pygame.display.set_mode((constants.SCREEN_WIDTH,constants.SCREEN_HEIGHT), flags)
 
     pygame.display.set_caption("Platformer with sprite sheets")
 
@@ -113,22 +117,20 @@ def main():
                     dead = True
 
             if event.type == pygame.KEYDOWN and not dead:
+                if event.key == pygame.K_ESCAPE:
+                    done = True
                 if event.key == pygame.K_LEFT:
                     player.go_left()
                 if event.key == pygame.K_RIGHT:
                     player.go_right()
                 if event.key == pygame.K_UP:
                     player.jump()
-                if event.key == pygame.K_SPACE:
-                    player.disable_movement()
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT and player.change_x < 0:
                     player.stop()
                 if event.key == pygame.K_RIGHT and player.change_x > 0:
                     player.stop()
-                if event.key == pygame.K_SPACE:
-                    player.enable_movement()
 
         # Update the player.
         active_sprite_list.update()
