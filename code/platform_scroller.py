@@ -116,17 +116,18 @@ def main():
                 if event.dict.get("kill", False) and not dead:
                     dead = True
 
-            if event.type == pygame.KEYDOWN and not dead:
+            if event.type == pygame.KEYDOWN :
                 if event.key == pygame.K_ESCAPE:
                     done = True
-                if event.key == pygame.K_LEFT:
-                    player.go_left()
-                if event.key == pygame.K_RIGHT:
-                    player.go_right()
-                if event.key == pygame.K_UP:
-                    player.jump()
-                if event.key == pygame.K_SPACE:
-                    player.disable_movement()
+                if not dead:
+                    if event.key == pygame.K_LEFT:
+                        player.go_left()
+                    if event.key == pygame.K_RIGHT:
+                        player.go_right()
+                    if event.key == pygame.K_UP:
+                        player.jump()
+                    if event.key == pygame.K_SPACE:
+                        player.disable_movement()
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT and player.change_x < 0:
