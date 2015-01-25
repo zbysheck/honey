@@ -115,6 +115,8 @@ class Level():
         self.thing_list.draw(screen)
         self.enemy_list.draw(screen)
 
+        self.husband.draw_suspicion_meter(screen)
+
     def shift_world(self, shift_x):
         """ When the user moves left/right and we need to scroll everything: """
 
