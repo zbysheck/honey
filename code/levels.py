@@ -30,7 +30,7 @@ class Level():
     world_shift = 0
     level_limit = -1000
 
-    def __init__(self, player, husband):
+    def __init__(self, player, bad_guys):
         """ Constructor. Pass in a handle to player. Needed for when moving platforms
             collide with the player. """
         self.platform_list = pygame.sprite.Group()
@@ -38,11 +38,13 @@ class Level():
         self.enemy_list = pygame.sprite.Group()
         self.character_list = pygame.sprite.Group()
         self.player = player
-        self.husband = husband
-        self.enemy_list.add(husband)
+        self.husband = bad_guys[0]
         self.active_sprites = pygame.sprite.Group()
         self.active_sprites.add(player)
-        self.active_sprites.add(husband)
+
+        for bad_guy in bad_guys:
+            self.enemy_list.add(bad_guy)
+            self.active_sprites.add(bad_guy)
 
     def one_tile(self, tile, y, x, passable):
         return [tile, x*self.tileSize, y*self.tileSize, passable]
@@ -163,11 +165,11 @@ class Level():
 class Level01(Level):
     """ Definition for level 1. """
 
-    def __init__(self, player, husband):
+    def __init__(self, player, bad_guys):
         """ Create level 1. """
 
         # Call the parent constructor
-        Level.__init__(self, player, husband)
+        Level.__init__(self, player, bad_guys)
 
         self.background = pygame.image.load("img/background_01.png").convert()
         self.background.set_colorkey(constants.WHITE)
