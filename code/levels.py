@@ -70,19 +70,19 @@ class Level():
                             chosen_sprite = [thing.WARDROBE_OPEN, j*self.tileSize, i*self.tileSize, self.player, thing.WARDROBE_CLOSED, thing.WARDROBE_CLOSED2]
                             t = thing.Wardrobe
                         elif txt[i][j] == 'D':
-                            chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.player, thing.DOOR_OPEN]
+                            chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.active_sprites, thing.DOOR_OPEN]
                             t = thing.Door
                         elif txt[i][j] == 'f':
                             #TODO: add different graphics
-                            chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.player, thing.DOOR_OPEN]
+                            chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.active_sprites, thing.DOOR_OPEN]
                             t = thing.FinalDoor
                         elif txt[i][j] == 'c':
-                            chosen_sprite = [thing.SOCK, j*self.tileSize, i*self.tileSize, self.player]
+                            chosen_sprite = [thing.SOCK, j*self.tileSize, i*self.tileSize, self.active_sprites]
                             t = thing.Clothing
                         elif txt[i][j] == 'b':
                             chosen_sprite = self.one_tile(thing.BED, i, j, self.player)
                         elif txt[i][j].isdigit():
-                            chosen_sprite = [thing.STAIR_SPRITE, j*self.tileSize, i*self.tileSize, self.player, txt[i][j]]
+                            chosen_sprite = [thing.STAIR_SPRITE, j*self.tileSize, i*self.tileSize, self.active_sprites, txt[i][j]]
                             t = thing.Staircase
                         if chosen_sprite:
                             block = t(*chosen_sprite)

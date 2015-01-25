@@ -51,6 +51,8 @@ class Husband(pygame.sprite.Sprite):
     walking_frames_u = []
     walking_frames_d = []
 
+    _enabled = False
+
     player = None
 
     def __init__(self):
@@ -136,3 +138,7 @@ class Husband(pygame.sprite.Sprite):
     def update(self):
         self._ai()
         self._update_animation()
+
+    def enable_movement(self):
+        # if True - husband cannot move through stairs and doors
+        self._enabled = True
