@@ -114,7 +114,7 @@ class Husband(pygame.sprite.Sprite):
         Husband._suspicion_delay += 1
 
     def _update_position(self):
-        k = Husband._suspicion_value // 10
+        k = Husband._suspicion_value // 13
 
         if k == 0:
             k = 1
