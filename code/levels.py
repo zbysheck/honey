@@ -97,6 +97,9 @@ class Level():
         self.platform_list.update()
         self.thing_list.update()
         self.enemy_list.update()
+        # Wardrobe removes sprite from all groups, fix so player can move around after getting into wardrobe
+        if not self.active_sprites.has(self.player):
+            self.active_sprites.add(self.player)
 
     def draw(self, screen):
         """ Draw everything on this level. """
