@@ -45,13 +45,14 @@ class Husband(pygame.sprite.Sprite):
     # Public references
     player = None
 
-    def __init__(self, patrol_zone, sprite_img_path = "img/husband.png"):
+    def __init__(self, name, patrol_zone, sprite_img_path = "img/husband.png"):
         super(Husband, self).__init__()
 
        # Attributes
+        self.name = name
         self._change_x = -1
         self._change_y = 0
-        self._x0 = 500
+        self._x0 = patrol_zone[1]
         self._y0 = 0
         self._direction = "L"
         self._sprite_frame_frequency = 4
@@ -127,7 +128,8 @@ class Husband(pygame.sprite.Sprite):
         self.rect.x += dx
         self.rect.y += dy
 
-        print "k=" + str(k)
+        #print "k=" + str(k)
+        print self.name + " _x0=" + str(self._x0) + " _y0=" + str(self._y0) + " rect.x=" + str(self.rect.x) + " rect.y=" + str(self.rect.y)
 
     def _update_animation(self):
         self._sprite_frame_frequency += 4
