@@ -137,6 +137,7 @@ def main():
                 if event.key == pygame.K_SPACE:
                     player.enable_movement()
 
+
         # Update the player.
         active_sprite_list.update()
 

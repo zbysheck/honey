@@ -130,34 +130,36 @@ class Husband(pygame.sprite.Sprite):
         self._change_y = y
 
     def _collision_detection(self):
-        # husband sight range simulated by rectangle with given size
-        width = 100
-        height = 70
-        block = Block(width, height)
 
-        # compute sight rectangle coordinates in order to detect whether player has been seen or not
-        if self._direction == "R":
-            block.rect.x = self.rect.x + width
-            block.rect.y = self.rect.y
-        elif self._direction == "L":
-            block.rect.x = self.rect.x - width
-            block.rect.y = self.rect.y
+        if not self.player.hidden:
+            # husband sight range simulated by rectangle with given size
+            width = 100
+            height = 70
+            block = Block(width, height)
 
-        # check if player is in the husband sight
-        if pygame.sprite.collide_rect(block, self.player):
-            print "I see you!!!"
+            # compute sight rectangle coordinates in order to detect whether player has been seen or not
+            if self._direction == "R":
+                block.rect.x = self.rect.x + width
+                block.rect.y = self.rect.y
+            elif self._direction == "L":
+                block.rect.x = self.rect.x - width
+                block.rect.y = self.rect.y
 
-            self._increase_suspicion_meter(10)
+            # check if player is in the husband sight
+            if pygame.sprite.collide_rect(block, self.player):
+                print "I see you!!!"
 
-            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "I see you!!!", "time": 5}))
+                self._increase_suspicion_meter(10)
 
-        # check if husband caught player
-        if pygame.sprite.collide_rect(self, self.player):
-            print "I got you!!!"
+                pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "I see you!!!", "time": 5}))
 
-            self._increase_suspicion_meter(100)
+            # check if husband caught player
+            if pygame.sprite.collide_rect(self, self.player):
+                print "I got you!!!"
 
-            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 10, "kill": True}))
+                self._increase_suspicion_meter(100)
+
+                pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 10, "kill": True}))
 
     def _ai(self):
         self._update_position()
