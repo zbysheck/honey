@@ -108,7 +108,7 @@ class Husband(pygame.sprite.Sprite):
 
         # compute sight rectangle coordinates in order to detect whether player has been seen or not
         if self.direction == "R":
-            block.rect.x = self.rect.x
+            block.rect.x = self.rect.x + width
             block.rect.y = self.rect.y
         elif self.direction == "L":
             block.rect.x = self.rect.x - width
