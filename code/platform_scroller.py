@@ -80,7 +80,6 @@ def main():
     husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
     husband.player = player
 
-
     # Create all the levels
     level_list = [levels.Level01(player, husband)]
     #level_list.append(levels.Level_02(player))
