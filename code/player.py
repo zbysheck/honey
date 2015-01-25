@@ -73,6 +73,7 @@ class Player(pygame.sprite.Sprite):
 
         # Set a referance to the image rect.
         self.rect = self.image.get_rect()
+        self.hidden = False
 
     def update(self):
         if self._enabled:
@@ -173,7 +174,9 @@ class Player(pygame.sprite.Sprite):
 
     def show(self):
         self.add(self.sprite_list)
+        self.hidden = False
         print "SHOW"
 
     def hide(self):
+        self.hidden = True
         self.kill()

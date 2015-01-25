@@ -5,6 +5,7 @@ import time
 import pygame
 from pygame.event import Event
 import constants
+from husband import Husband
 from player import Player
 from husband import Husband
 from spritesheet_functions import SpriteSheet
@@ -34,6 +35,8 @@ WARDROBE_CLOSED2       = (217, 360, 69, 70)
 DOOR_OPEN         = (720, 432, 70, 70)
 DOOR_CLOSED       = (648, 432, 70, 70)
 SOCK              = (72, 0, 70, 70)
+CHANDELIER       = (0, 0, 70, 70)
+CHANDELIER_FALLEN       = (70, 0, 70, 70)
 
 class Thing(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -141,10 +144,28 @@ class FinalDoor(Door):
         super(FinalDoor, self).update()
         hit = pygame.sprite.spritecollideany(self, self.player)
         if hit and isinstance(hit, Player):
-            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "LEVEL COMPLETE", "time": 5}))
+            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "LEVEL COMPLETE", "time": 10, "kill": True}))
 
 
 class Clothing(ActionObject):
     """ Clothing disappears when you pick it up """
     def do_action(self, hit):
         self.kill()
+
+
+class ChandelierSwitch(ActionObject):
+    def __init__(self, sprite_sheet_data, x, y, characters, fallen_image):
+        super(ChandelierSwitch, self).__init__(sprite_sheet_data, x, y, characters)
+        self.fallen_image = fallen_image
+        sprite_sheet = SpriteSheet("img/things_spritesheet2.png")
+        self.fallen_image = sprite_sheet.get_image(*fallen_image)
+
+    def do_action(self, hit):
+        collisions = pygame.sprite.spritecollide(self, self.player)
+        player = [p for p in collisions if isinstance(p, Player)][0]
+        thug = [p for p in collisions if isinstance(p, Husband)][0]
+
+        if player and thug and player.rect.x == self.rect.x and player.rect.y == self.rect.y + 70 \
+                and thug.rect.x == self.rect.x + 2*70 and thug.rect.y == self.rect.y + 70:
+            thug.kill()
+            self.image = self.fallen_image

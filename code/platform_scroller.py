@@ -97,7 +97,7 @@ def main():
     clock = pygame.time.Clock()
 
     time_start = time.time()
-
+    dead = False
     # -------- Main Program Loop -----------
     while not done:
         for event in pygame.event.get():  # User did something
@@ -109,7 +109,10 @@ def main():
                     message_display_time = event.dict["time"]
                     #done = True
 
-            if event.type == pygame.KEYDOWN:
+                if event.dict.get("kill", False) and not dead:
+                    dead = True
+
+            if event.type == pygame.KEYDOWN and not dead:
                 if event.key == pygame.K_LEFT:
                     player.go_left()
                 if event.key == pygame.K_RIGHT:
