@@ -6,7 +6,7 @@ import pygame
 from pygame.event import Event
 import constants
 from player import Player
-
+from husband import Husband
 from spritesheet_functions import SpriteSheet
 
 # These constants define our platform types:
@@ -77,7 +77,11 @@ class Staircase(ActionObject):
 
     def do_action(self, hit):
         hit.rect.x = self.paired_door.rect.x
-        hit.rect.y = self.paired_door.rect.y
+
+        if isinstance(hit, Player):
+            hit.rect.y = self.paired_door.rect.y
+        elif isinstance(hit, Husband):
+            hit.rect.y = self.paired_door.rect.y + 15
 
 
 class Wardrobe(Thing):
