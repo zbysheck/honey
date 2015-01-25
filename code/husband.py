@@ -28,7 +28,6 @@ class Block(pygame.sprite.Sprite):
        # Update the position of this object by setting the values of rect.x and rect.y
        self.rect = self.image.get_rect()
 
-
 class Husband(pygame.sprite.Sprite):
     """ This class implements husband. """
 
@@ -63,6 +62,7 @@ class Husband(pygame.sprite.Sprite):
         for i in range(9):
             image = sprite_sheet.get_image(i * self.PL_WIDTH, 3 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
             self._walking_frames_r.append(image)
+
         for i in range(9):
             image = sprite_sheet.get_image(i * self.PL_WIDTH, self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
             self._walking_frames_l.append(image)
@@ -87,8 +87,17 @@ class Husband(pygame.sprite.Sprite):
         # suspicion meter
         pygame.draw.rect(screen, red, (x, y, width, height))
 
-    def _update_suspicion_meter(self):
-        self._suspicion_value = (self._suspicion_value + 1) % 100
+    def _increase_suspicion_meter(self, value):
+        if ((self._suspicion_value + value) > 100):
+            self._suspicion_value = 100
+        else:
+            self._suspicion_value += value
+
+    def _decrease_suspicion_meter(self, value):
+        if ((self._suspicion_value - value) < 0):
+            self._suspicion_value = 0
+        else:
+            self._suspicion_value -= value
 
     def _update_position(self):
         self._x0 += self._change_x
@@ -128,15 +137,20 @@ class Husband(pygame.sprite.Sprite):
         if pygame.sprite.collide_rect(block, self.player):
             print "I see you!!!"
 
+            self._increase_suspicion_meter(15)
+
+            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "I see you!!!", "time": 5}))
+
         # check if husband caught player
         if pygame.sprite.collide_rect(self, self.player):
             print "I got you!!!"
+
+            self._increase_suspicion_meter(100)
+
             pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 5}))
 
     def _ai(self):
         self._update_position()
-
-        self._update_suspicion_meter()
 
         if self._x0 > 500:
             self._direction = "L"
