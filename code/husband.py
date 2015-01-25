@@ -45,7 +45,7 @@ class Husband(pygame.sprite.Sprite):
     # Public references
     player = None
 
-    def __init__(self, patrol_zone):
+    def __init__(self, patrol_zone, sprite_img_path = "img/husband.png"):
         super(Husband, self).__init__()
 
        # Attributes
@@ -61,7 +61,7 @@ class Husband(pygame.sprite.Sprite):
         self._enabled = False
         self._patrol_zone = patrol_zone
 
-        sprite_sheet = SpriteSheet("img/husband.png")
+        sprite_sheet = SpriteSheet(sprite_img_path)
 
         for i in range(9):
             image = sprite_sheet.get_image(i * self._PL_WIDTH, 3 * self._PL_HEIGHT, self._PL_WIDTH, self._PL_HEIGHT-self._PL_MARGIN)
