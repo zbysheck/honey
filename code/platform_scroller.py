@@ -74,14 +74,24 @@ def main():
     # Create the player
     player = Player()
 
+    bad_guys = []
+
     # Add husband
     husband = Husband([0, 500])
     husband.rect.x = 1100
     husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
     husband.player = player
+    bad_guys.append(husband)
+
+    # Add guard
+    guard = Husband([0, 200])
+    guard.rect.x = 2100
+    guard.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
+    guard.player = player
+    bad_guys.append(guard)
 
     # Create all the levels
-    level_list = [levels.Level01(player, husband)]
+    level_list = [levels.Level01(player, bad_guys)]
     #level_list.append(levels.Level_02(player))
 
     # Set the current level
