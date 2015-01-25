@@ -66,6 +66,10 @@ class Level():
                         elif txt[i][j] == 'D':
                             chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.player, thing.DOOR_OPEN]
                             t = thing.Door
+                        elif txt[i][j] == 'f':
+                            #TODO: add different graphics
+                            chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.player, thing.DOOR_OPEN]
+                            t = thing.FinalDoor
                         elif txt[i][j] == 'c':
                             chosen_sprite = [thing.SOCK, j*self.tileSize, i*self.tileSize, self.player]
                             t = thing.Clothing
@@ -159,7 +163,7 @@ class Level01(Level):
  #..s..1......2.#
  ##################
  #.......#........#
- #b...1..D.c.2.....
+ #b...1..D.c.2....f
  ##################"""
 
         level = self.generate_tiles(txt)  # +level

@@ -1,3 +1,7 @@
+from pygame.event import Event
+from constants import GAME_OVER_EVENT
+import constants
+
 __author__ = 'ksakowsk'
 
 import pygame
@@ -82,6 +86,7 @@ class Husband(pygame.sprite.Sprite):
         hit = pygame.sprite.collide_rect(self, self.player)
         if hit:
             print "collision!"
+            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 5}))
 
     def _ai(self):
         self._update_position()

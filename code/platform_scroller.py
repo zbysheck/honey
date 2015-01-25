@@ -33,6 +33,9 @@ import dialog
 
 from player import Player
 
+current_message = "Oh no! It's my husband!"
+message_expire = None
+message_display_time = 2
 
 def show_help(screen):
     textcolor = (255, 255, 255)
@@ -53,6 +56,7 @@ def main():
     pygame.init()
     pygame.font.init()
     pygame.mixer.init()
+    global current_message, message_expire, message_display_time
     # music = pygame.mixer.Sound("resources/DST-Arch-Delerium.ogg")
     #music.play(loops=-1)
 
@@ -93,6 +97,10 @@ def main():
         for event in pygame.event.get():  # User did something
             if event.type == pygame.QUIT:  # If user clicked close
                 done = True  # Flag that we are done so we exit this loop
+            if event.type == pygame.USEREVENT:
+                if event.dict["action"] == constants.MESSAGE:
+                    current_message = event.dict["message"]
+                    message_display_time = event.dict["time"]
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -142,12 +150,18 @@ def main():
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
         current_level.draw(screen)
         active_sprite_list.draw(screen)
-        show_help(screen)
+        #show_help(screen)
 
-        if time.time()-time_start < 2:
-            print_msg("Oh no! It's my husband!", 10,500, screen)
         if time.time() - time_start < 4 and time.time() - time_start > 2:
             print_msg("WHAT DO WE DO NOW?!?", 10, 510, screen)
+
+        if current_message:
+            print_msg(current_message, 10, 510, screen)
+            if not message_expire:
+                message_expire = time.time()
+        if message_expire and time.time() - message_expire > message_display_time:
+            current_message = None
+            message_expire = None
         # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 
         # Limit to 60 frames per second
