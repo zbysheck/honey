@@ -81,6 +81,9 @@ class Level():
                         elif txt[i][j] == 'c':
                             chosen_sprite = [thing.SOCK, j*self.tileSize, i*self.tileSize, self.active_sprites]
                             t = thing.Clothing
+                        elif txt[i][j] == 'z':
+                            chosen_sprite = [thing.CHANDELIER, j*self.tileSize, i*self.tileSize, self.active_sprites, thing.CHANDELIER_FALLEN]
+                            t = thing.ChandelierSwitch
                         elif txt[i][j] == 'b':
                             chosen_sprite = self.one_tile(thing.BED, i, j, self.player)
                         elif txt[i][j].isdigit():
@@ -178,7 +181,7 @@ class Level01(Level):
  #2. .D....s. 3.D    4   #       s     7#
  #########################    ###########
  #2.c.#.1..s. 3.#5         6 ##     #  7#
- #############################       ######
+ ############################# z     ######
  #b...  1..D.c.  5.D 4.c.#.6.D.....  D.....
  ##########################################"""
 
