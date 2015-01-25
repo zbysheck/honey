@@ -117,6 +117,8 @@ def main():
                     dead = True
 
             if event.type == pygame.KEYDOWN and not dead:
+                if event.key == pygame.K_ESCAPE:
+                    done = True
                 if event.key == pygame.K_LEFT:
                     player.go_left()
                 if event.key == pygame.K_RIGHT:
