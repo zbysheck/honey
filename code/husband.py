@@ -14,9 +14,9 @@ class Husband(pygame.sprite.Sprite):
     # Set speed vector of player
     change_x = 0
     change_y = 0
-    x0 = 0
+    x0 = 500
     y0 = 0
-    direction = "R"
+    direction = "L"
     sprite_frame_frequency = 4
 
     PL_WIDTH = 64
@@ -34,7 +34,7 @@ class Husband(pygame.sprite.Sprite):
     def __init__(self):
         super(Husband, self).__init__()
 
-        self.change_x = 1
+        self.change_x = -1
         self.change_y = 0
 
         sprite_sheet = SpriteSheet("img/husband.png")
@@ -86,7 +86,7 @@ class Husband(pygame.sprite.Sprite):
     def _ai(self):
         self._update_position()
 
-        if self.x0 > 350:
+        if self.x0 > 500:
             self.direction = "L"
             self._set_direction(-1, 0)
         elif self.x0 < 0:

@@ -181,7 +181,7 @@ class Level01(Level):
 
         # Add husband
         husband = Husband()
-        husband.rect.x = 200
+        husband.rect.x = 1200
         husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
         husband.player = player
         self.enemy_list.add(husband)
