@@ -85,6 +85,9 @@ class Level():
                             t = thing.Clothing
                         elif txt[i][j] == 'z':
                             chosen_sprite = [thing.CHANDELIER, j*self.tileSize, i*self.tileSize, self.active_sprites, thing.CHANDELIER_FALLEN]
+                            t = thing.Chandelier
+                        elif txt[i][j] == 'j':
+                            chosen_sprite = [thing.CHANDELIER_SWITCH, j*self.tileSize, i*self.tileSize, self.active_sprites]
                             t = thing.ChandelierSwitch
                         elif txt[i][j] == 'b':
                             chosen_sprite = self.one_tile(thing.BED, i, j, self.player)
@@ -95,6 +98,7 @@ class Level():
                             block = t(*chosen_sprite)
                             self.thing_list.add(block)
                             self.match_doors()
+                            self.match_chandelier()
 
         return generated
 
@@ -160,6 +164,18 @@ class Level():
         self.wallpaper_points = [[x * self.tileSize for x in y] for y in self.wallpaper_points]  # Fuck yeah
         print self.wallpaper_points
 
+    def match_chandelier(self):
+        chandelier = None
+        switch = None
+        for i in self.thing_list:
+            if isinstance(i, thing.Chandelier):
+                chandelier = i
+            if isinstance(i, thing.ChandelierSwitch):
+                switch = i
+
+        if switch and chandelier:
+            switch.chandelier = chandelier
+
 
 # Create platforms for the level
 class Level01(Level):
@@ -177,7 +193,7 @@ class Level01(Level):
 
         txt = """
    ##################################
-   #2.D....s. 3.D   4 #       s    7#
+   #2.D....s. 3.D   4 #       s j  7#
   #####################    ###########
   #c2.#.1.. s 3.#5      6 ##  #  # 7 #
  ########################## z     ######

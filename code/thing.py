@@ -37,6 +37,7 @@ DOOR_CLOSED       = (648, 432, 70, 70)
 SOCK              = (72, 0, 70, 70)
 CHANDELIER_FALLEN = (360, 795, 210, 140)
 CHANDELIER  = (573, 795, 210, 140)
+CHANDELIER_SWITCH = (71, 142, 70, 70)
 
 class Thing(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -153,14 +154,17 @@ class Clothing(ActionObject):
         self.kill()
 
 
-class ChandelierSwitch(ActionObject):
+class Chandelier(ActionObject):
     def __init__(self, sprite_sheet_data, x, y, characters, fallen_image):
-        super(ChandelierSwitch, self).__init__(sprite_sheet_data, x, y, characters)
+        super(Chandelier, self).__init__(sprite_sheet_data, x, y, characters)
         self.fallen_image = fallen_image
         sprite_sheet = SpriteSheet("img/things_spritesheet2.png")
         self.fallen_image = sprite_sheet.get_image(*fallen_image)
 
     def do_action(self, hit):
+        pass
+
+    def release(self):
         collisions = pygame.sprite.spritecollide(self, self.player, False)
         player = [p for p in collisions if isinstance(p, Player)]
         thug = [p for p in collisions if isinstance(p, Husband)]
@@ -172,8 +176,16 @@ class ChandelierSwitch(ActionObject):
             thug = thug[0]
         else:
             thug = None
-        if player and player.rect.x >= self.rect.x and player.rect.y >= self.rect.y + 50:
+        #if player and player.rect.x >= self.rect.x and player.rect.y >= self.rect.y + 50:
 #          and thug  and thug.rect.x == self.rect.x + 2*70 and thug.rect.y == self.rect.y + 70:
-            if thug:
-                thug.kill()
-            self.image = self.fallen_image
+        if thug:
+            thug.kill()
+        self.image = self.fallen_image
+
+class ChandelierSwitch(ActionObject):
+    def __init__(self, sprite_sheet_data, x, y, characters):
+        super(ChandelierSwitch, self).__init__(sprite_sheet_data, x, y, characters)
+        self.chandelier = None
+
+    def do_action(self, hit):
+        self.chandelier.release()
