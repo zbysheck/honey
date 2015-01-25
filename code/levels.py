@@ -174,31 +174,21 @@ class Level01(Level):
         self.husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
 
         txt = """
- #################################
- #..............#                 #
- #..s..1......2.#       ######    #
- ##################    #     #    #
- #.......#........#   ##     ######
- #b...1..D.c.2...............D......
+ ########################################
+ #2. .D....s. 3.D    4   #       s     7#
+ #########################    ###########
+ #2.c.#.1..s. 3.#5         6 ##     #  7#
+ #############################       ######
+ #b...  1..D.c.  5.D 4.c.#.6.D.....  D.....
  ##########################################"""
 
         level = self.generate_tiles(txt)  # +level
 
         # init wallpaper boundaries
-        self.wallpaper_points += [[1, 1], [16, 1], [16, 4], [18, 4], [18, 7], [1, 7]]
+        #self.wallpaper_points += [[1, 1], [16, 1], [16, 4], [18, 4], [18, 7], [1, 7]]
+        self.wallpaper_points += [[1, 1], [66, 1], [66, 7], [1, 7]]
         self.translate_wallpaper()
         self.wallpaper_color = (189, 140, 191)
-
-        # Add a custom moving platform
-        block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE, 1350, 280, self.player)
-        block.rect.x = 1350
-        block.rect.y = 280
-        block.boundary_left = 1350
-        block.boundary_right = 1600
-        block.change_x = 1
-        block.player = self.player
-        block.level = self
-        self.platform_list.add(block)
 
 
 # Create platforms for the level

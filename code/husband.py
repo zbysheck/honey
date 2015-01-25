@@ -90,9 +90,9 @@ class Husband(pygame.sprite.Sprite):
         pygame.draw.rect(screen, red, (x, y, width, height))
 
     def _increase_suspicion_meter(self, value):
-        if (self._suspicion_delay % 10 == 0):
+        if (self._suspicion_delay % 5 == 0):
 
-            if ((self._suspicion_value + value) > 100):
+            if ((self._suspicion_value + value) >= 100):
                 self._suspicion_value = 100
             else:
                 self._suspicion_value += value
@@ -100,7 +100,7 @@ class Husband(pygame.sprite.Sprite):
         self._suspicion_delay += 1
 
     def _decrease_suspicion_meter(self, value):
-        if (self._suspicion_delay % 10 == 0):
+        if (self._suspicion_delay % 5 == 0):
 
             if ((self._suspicion_value - value) < 0):
                 self._suspicion_value = 0
@@ -157,7 +157,7 @@ class Husband(pygame.sprite.Sprite):
 
             self._increase_suspicion_meter(100)
 
-            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 5}))
+            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 10, "kill": True}))
 
     def _ai(self):
         self._update_position()
