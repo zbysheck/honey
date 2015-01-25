@@ -20,7 +20,7 @@ class Level():
     door_list = {}
     tileSize = 70
     wallpaper_points = []
-
+    active_sprites = None
     # Background image
     background = None
 
@@ -28,13 +28,19 @@ class Level():
     world_shift = 0
     level_limit = -1000
 
-    def __init__(self, player):
+    def __init__(self, player, husband):
         """ Constructor. Pass in a handle to player. Needed for when moving platforms
             collide with the player. """
         self.platform_list = pygame.sprite.Group()
         self.thing_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
+        self.character_list = pygame.sprite.Group()
         self.player = player
+        self.husband = husband
+        self.enemy_list.add(husband)
+        self.active_sprites = pygame.sprite.Group()
+        self.active_sprites.add(player)
+        self.active_sprites.add(husband)
 
     def one_tile(self, tile, y, x, passable):
         return [tile, x*self.tileSize, y*self.tileSize, passable]
@@ -64,19 +70,19 @@ class Level():
                             chosen_sprite = [thing.WARDROBE_OPEN, j*self.tileSize, i*self.tileSize, self.player, thing.WARDROBE_CLOSED, thing.WARDROBE_CLOSED2]
                             t = thing.Wardrobe
                         elif txt[i][j] == 'D':
-                            chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.player, thing.DOOR_OPEN]
+                            chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.active_sprites, thing.DOOR_OPEN]
                             t = thing.Door
                         elif txt[i][j] == 'f':
                             #TODO: add different graphics
-                            chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.player, thing.DOOR_OPEN]
+                            chosen_sprite = [thing.DOOR_CLOSED, j*self.tileSize, i*self.tileSize, self.active_sprites, thing.DOOR_OPEN]
                             t = thing.FinalDoor
                         elif txt[i][j] == 'c':
-                            chosen_sprite = [thing.SOCK, j*self.tileSize, i*self.tileSize, self.player]
+                            chosen_sprite = [thing.SOCK, j*self.tileSize, i*self.tileSize, self.active_sprites]
                             t = thing.Clothing
                         elif txt[i][j] == 'b':
                             chosen_sprite = self.one_tile(thing.BED, i, j, self.player)
                         elif txt[i][j].isdigit():
-                            chosen_sprite = [thing.STAIR_SPRITE, j*self.tileSize, i*self.tileSize, self.player, txt[i][j]]
+                            chosen_sprite = [thing.STAIR_SPRITE, j*self.tileSize, i*self.tileSize, self.active_sprites, txt[i][j]]
                             t = thing.Staircase
                         if chosen_sprite:
                             block = t(*chosen_sprite)
@@ -147,15 +153,18 @@ class Level():
 class Level01(Level):
     """ Definition for level 1. """
 
-    def __init__(self, player):
+    def __init__(self, player, husband):
         """ Create level 1. """
 
         # Call the parent constructor
-        Level.__init__(self, player)
+        Level.__init__(self, player, husband)
 
         self.background = pygame.image.load("img/background_01.png").convert()
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500
+
+        self.husband.rect.x = 1200
+        self.husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
 
         txt = """
  ################
@@ -183,23 +192,16 @@ class Level01(Level):
         block.level = self
         self.platform_list.add(block)
 
-        # Add husband
-        husband = Husband()
-        husband.rect.x = 1200
-        husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
-        husband.player = player
-        self.enemy_list.add(husband)
-
 
 # Create platforms for the level
 class Level02(Level):
     """ Definition for level 2. """
 
-    def __init__(self, player):
+    def __init__(self, player, husband):
         """ Create level 1. """
 
         # Call the parent constructor
-        Level.__init__(self, player)
+        Level.__init__(self, player, husband)
 
         self.background = pygame.image.load("img/background_02.png").convert()
         self.background.set_colorkey(constants.WHITE)
