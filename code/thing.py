@@ -141,7 +141,7 @@ class FinalDoor(Door):
         super(FinalDoor, self).update()
         hit = pygame.sprite.spritecollideany(self, self.player)
         if hit and isinstance(hit, Player):
-            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "LEVEL COMPLETE", "time": 5}))
+            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "LEVEL COMPLETE", "time": 10, "kill": True}))
 
 
 class Clothing(ActionObject):

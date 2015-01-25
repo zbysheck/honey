@@ -157,7 +157,7 @@ class Husband(pygame.sprite.Sprite):
 
             self._increase_suspicion_meter(100)
 
-            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 5}))
+            pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 10, "kill": True}))
 
     def _ai(self):
         self._update_position()
