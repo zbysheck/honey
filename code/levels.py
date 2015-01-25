@@ -20,6 +20,7 @@ class Level():
     door_list = {}
     tileSize = 70
     wallpaper_points = []
+    wallpaper_color = (0, 0, 0)
 
     # Background image
     background = None
@@ -98,7 +99,7 @@ class Level():
         screen.blit(self.background, (self.world_shift // 3, 0))
 
         # Draw wallpaper
-        pygame.draw.polygon(screen, (189, 140, 191), self.wallpaper_points)
+        pygame.draw.polygon(screen, self.wallpaper_color, self.wallpaper_points)
 
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
@@ -167,6 +168,7 @@ class Level01(Level):
         # init wallpaper boundaries
         self.wallpaper_points += [[1, 1], [16, 1], [16, 4], [18, 4], [18, 7], [1, 7]]
         self.translate_wallpaper()
+        self.wallpaper_color = (189, 140, 191)
 
         # Add a custom moving platform
         block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE, 1350, 280, self.player)

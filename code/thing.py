@@ -72,8 +72,8 @@ class Staircase(ActionObject):
         self.paired_door = None
 
     def do_action(self):
-        self.player.rect.x = self.paired_door.rect.x
-        self.player.rect.y = self.paired_door.rect.y
+        self.player.rect.x = self.paired_door.rect.x+20
+        self.player.rect.y = self.paired_door.rect.y+16
 
 
 class Wardrobe(Thing):
@@ -107,6 +107,7 @@ class Wardrobe(Thing):
             else:
                 self.image = self.closed_image
 
+
 class Door(Thing):
     """ Door opens when you touch it and stays open """
     def __init__(self, sprite_sheet_data, x, y, player, open_image):
@@ -119,7 +120,7 @@ class Door(Thing):
 
     def update(self):
         hit = pygame.sprite.collide_rect(self, self.player)
-        print("hit: " + str(hit) + "  isOpen: " + str (self.open))
+        print("hit: " + str(hit) + "  isOpen: " + str(self.open))
         if hit and not self.open:
             self.image = self.open_image
             self.open = True
