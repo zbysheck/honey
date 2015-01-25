@@ -32,43 +32,42 @@ class Husband(pygame.sprite.Sprite):
     """ This class implements husband. """
 
     # Constants
-    PL_WIDTH = 64
-    PL_HEIGHT = 64
-    PL_MARGIN = 0
+    _PL_WIDTH = 64
+    _PL_HEIGHT = 64
+    _PL_MARGIN = 0
 
-    # Attributes
-    _change_x = 0
-    _change_y = 0
-    _x0 = 500
-    _y0 = 0
-    _direction = "L"
-    _sprite_frame_frequency = 4
-    _walking_frames_l = []
-    _walking_frames_r = []
+    # Statics
     _suspicion_value = 0
     _suspicion_delay = 0
     _last_suspicion_meter_update = 0
-    _patrol_zone = []
 
-    _enabled = False
-
+    # Public references
     player = None
 
     def __init__(self, patrol_zone):
         super(Husband, self).__init__()
 
+       # Attributes
         self._change_x = -1
         self._change_y = 0
+        self._x0 = 500
+        self._y0 = 0
+        self._direction = "L"
+        self._sprite_frame_frequency = 4
+        self._walking_frames_l = []
+        self._walking_frames_r = []
+        self._patrol_zone = []
+        self._enabled = False
         self._patrol_zone = patrol_zone
 
         sprite_sheet = SpriteSheet("img/husband.png")
 
         for i in range(9):
-            image = sprite_sheet.get_image(i * self.PL_WIDTH, 3 * self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
+            image = sprite_sheet.get_image(i * self._PL_WIDTH, 3 * self._PL_HEIGHT, self._PL_WIDTH, self._PL_HEIGHT-self._PL_MARGIN)
             self._walking_frames_r.append(image)
 
         for i in range(9):
-            image = sprite_sheet.get_image(i * self.PL_WIDTH, self.PL_HEIGHT, self.PL_WIDTH, self.PL_HEIGHT-self.PL_MARGIN)
+            image = sprite_sheet.get_image(i * self._PL_WIDTH, self._PL_HEIGHT, self._PL_WIDTH, self._PL_HEIGHT-self._PL_MARGIN)
             self._walking_frames_l.append(image)
 
         # Set the image the player starts with
@@ -91,25 +90,27 @@ class Husband(pygame.sprite.Sprite):
         # suspicion meter
         pygame.draw.rect(screen, red, (x, y, width, height))
 
-    def _increase_suspicion_meter(self, value):
-        if (self._suspicion_delay % 5 == 0):
+    @staticmethod
+    def _increase_suspicion_meter(value):
+        if (Husband._suspicion_delay % 5 == 0):
 
-            if ((self._suspicion_value + value) >= 100):
-                self._suspicion_value = 100
+            if ((Husband._suspicion_value + value) >= 100):
+                Husband._suspicion_value = 100
             else:
-                self._suspicion_value += value
+                Husband._suspicion_value += value
 
-        self._suspicion_delay += 1
+        Husband._suspicion_delay += 1
 
-    def _decrease_suspicion_meter(self, value):
-        if (self._suspicion_delay % 5 == 0):
+    @staticmethod
+    def _decrease_suspicion_meter(value):
+        if (Husband._suspicion_delay % 5 == 0):
 
-            if ((self._suspicion_value - value) < 0):
-                self._suspicion_value = 0
+            if ((Husband._suspicion_value - value) < 0):
+                Husband._suspicion_value = 0
             else:
-                self._suspicion_value -= value
+                Husband._suspicion_value -= value
 
-        self._suspicion_delay += 1
+        Husband._suspicion_delay += 1
 
     def _update_position(self):
         self._x0 += self._change_x
@@ -151,7 +152,7 @@ class Husband(pygame.sprite.Sprite):
             if pygame.sprite.collide_rect(block, self.player):
                 print "I see you!!!"
 
-                self._increase_suspicion_meter(10)
+                Husband._increase_suspicion_meter(10)
 
                 pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "I see you!!!", "time": 5}))
 
@@ -159,7 +160,7 @@ class Husband(pygame.sprite.Sprite):
             if pygame.sprite.collide_rect(self, self.player):
                 print "I got you!!!"
 
-                self._increase_suspicion_meter(100)
+                Husband._increase_suspicion_meter(100)
 
                 pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 10, "kill": True}))
 

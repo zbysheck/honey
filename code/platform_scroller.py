@@ -66,10 +66,10 @@ def main():
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
     flags = screen.get_flags()
-    flags = flags|FULLSCREEN
+    #flags = flags|FULLSCREEN
     screen = pygame.display.set_mode((constants.SCREEN_WIDTH,constants.SCREEN_HEIGHT), flags)
 
-    pygame.display.set_caption("Platformer with sprite sheets")
+    pygame.display.set_caption("Honey, I'm home!")
 
     # Create the player
     player = Player()
@@ -79,7 +79,6 @@ def main():
     husband.rect.x = 1100
     husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
     husband.player = player
-
 
     # Create all the levels
     level_list = [levels.Level01(player, husband)]
