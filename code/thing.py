@@ -5,6 +5,7 @@ import time
 import pygame
 from pygame.event import Event
 import constants
+from player import Player
 
 from spritesheet_functions import SpriteSheet
 
@@ -57,14 +58,15 @@ class Thing(pygame.sprite.Sprite):
 
 
 class ActionObject(Thing):
-    def do_action(self):
+
+    def do_action(self, hit):
         raise NotImplementedError()
 
     def update(self):
-        hit = pygame.sprite.collide_rect(self, self.player)
-        if hit and not self.player._enabled:
-            self.do_action()
-            self.player.enable_movement()
+        hit = pygame.sprite.spritecollideany(self, self.player)
+        if hit and not hit._enabled:
+            self.do_action(hit)
+            hit.enable_movement()
 
 
 class Staircase(ActionObject):
@@ -73,9 +75,9 @@ class Staircase(ActionObject):
         self.door_number = door_number
         self.paired_door = None
 
-    def do_action(self):
-        self.player.rect.x = self.paired_door.rect.x
-        self.player.rect.y = self.paired_door.rect.y
+    def do_action(self, hit):
+        hit.rect.x = self.paired_door.rect.x
+        hit.rect.y = self.paired_door.rect.y
 
 
 class Wardrobe(Thing):
@@ -120,7 +122,7 @@ class Door(Thing):
         self.last_change = time.time()
 
     def update(self):
-        hit = pygame.sprite.collide_rect(self, self.player)
+        hit = pygame.sprite.spritecollideany(self, self.player)
         #print("hit: " + str(hit) + "  isOpen: " + str (self.open))
         if hit and not self.open:
             self.image = self.open_image
@@ -132,12 +134,12 @@ class Door(Thing):
 class FinalDoor(Door):
     def update(self):
         super(FinalDoor, self).update()
-        hit = pygame.sprite.collide_rect(self, self.player)
-        if hit:
+        hit = pygame.sprite.spritecollideany(self, self.player)
+        if hit and isinstance(hit, Player):
             pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "LEVEL COMPLETE", "time": 5}))
 
 
 class Clothing(ActionObject):
     """ Clothing disappears when you pick it up """
-    def do_action(self):
+    def do_action(self, hit):
         self.kill()

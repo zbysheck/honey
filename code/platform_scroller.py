@@ -107,6 +107,7 @@ def main():
                 if event.dict["action"] == constants.MESSAGE:
                     current_message = event.dict["message"]
                     message_display_time = event.dict["time"]
+                    done = True
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
