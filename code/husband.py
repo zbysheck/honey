@@ -45,7 +45,9 @@ class Husband(pygame.sprite.Sprite):
     _sprite_frame_frequency = 4
     _walking_frames_l = []
     _walking_frames_r = []
-    _suspicion_value  = 0
+    _suspicion_value = 0
+    _suspicion_delay = 0
+    _last_suspicion_meter_update = 0
 
     _enabled = False
 
@@ -88,16 +90,24 @@ class Husband(pygame.sprite.Sprite):
         pygame.draw.rect(screen, red, (x, y, width, height))
 
     def _increase_suspicion_meter(self, value):
-        if ((self._suspicion_value + value) > 100):
-            self._suspicion_value = 100
-        else:
-            self._suspicion_value += value
+        if (self._suspicion_delay % 10 == 0):
+
+            if ((self._suspicion_value + value) > 100):
+                self._suspicion_value = 100
+            else:
+                self._suspicion_value += value
+
+        self._suspicion_delay += 1
 
     def _decrease_suspicion_meter(self, value):
-        if ((self._suspicion_value - value) < 0):
-            self._suspicion_value = 0
-        else:
-            self._suspicion_value -= value
+        if (self._suspicion_delay % 10 == 0):
+
+            if ((self._suspicion_value - value) < 0):
+                self._suspicion_value = 0
+            else:
+                self._suspicion_value -= value
+
+        self._suspicion_delay += 1
 
     def _update_position(self):
         self._x0 += self._change_x
@@ -137,7 +147,7 @@ class Husband(pygame.sprite.Sprite):
         if pygame.sprite.collide_rect(block, self.player):
             print "I see you!!!"
 
-            self._increase_suspicion_meter(15)
+            self._increase_suspicion_meter(10)
 
             pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "I see you!!!", "time": 5}))
 
