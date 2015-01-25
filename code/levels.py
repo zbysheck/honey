@@ -163,7 +163,7 @@ class Level01(Level):
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500
 
-        self.husband.rect.x = 200
+        self.husband.rect.x = 1200
         self.husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
 
         txt = """
@@ -191,13 +191,6 @@ class Level01(Level):
         block.player = self.player
         block.level = self
         self.platform_list.add(block)
-
-        # Add husband
-        husband = Husband()
-        husband.rect.x = 200
-        husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
-        husband.player = player
-        self.enemy_list.add(husband)
 
 
 # Create platforms for the level
