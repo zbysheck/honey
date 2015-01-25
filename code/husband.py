@@ -92,7 +92,7 @@ class Husband(pygame.sprite.Sprite):
     def _increase_suspicion_meter(self, value):
         if (self._suspicion_delay % 10 == 0):
 
-            if ((self._suspicion_value + value) > 100):
+            if ((self._suspicion_value + value) >= 100):
                 self._suspicion_value = 100
             else:
                 self._suspicion_value += value
