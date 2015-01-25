@@ -28,6 +28,7 @@ import pygame
 
 import time
 import constants
+from husband import Husband
 import levels
 import dialog
 
@@ -69,8 +70,13 @@ def main():
     # Create the player
     player = Player()
 
+    # Add husband
+    husband = Husband()
+    husband.player = player
+
+
     # Create all the levels
-    level_list = [levels.Level01(player)]
+    level_list = [levels.Level01(player, husband)]
     #level_list.append(levels.Level_02(player))
 
     # Set the current level
