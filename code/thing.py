@@ -111,6 +111,7 @@ class Wardrobe(Thing):
             else:
                 self.image = self.closed_image
 
+
 class Door(Thing):
     """ Door opens when you touch it and stays open """
     def __init__(self, sprite_sheet_data, x, y, player, open_image):
