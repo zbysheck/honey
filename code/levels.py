@@ -173,16 +173,13 @@ class Level01(Level):
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500
 
-        self.husband.rect.x = 1200
-        self.husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
-
         txt = """
    ##################################
-   #2D....s. 3.D   4  #       s    7#
+   #2.D....s. 3.D   4 #       s    7#
   #####################    ###########
-  #c2#.1..s. 3.#5       6 ##     # 7 #
+  #c2.#.1..s. 3.#5      6 ##  #  # 7 #
  ########################## z     ######
- #b..  1..D.c.  5D 4.c .6.D.....  D....f
+ #b...  1..D.c.  5.D4c#.6.D.....  D....f
  #######################################"""
 
         level = self.generate_tiles(txt)  # +level

@@ -75,7 +75,9 @@ def main():
     player = Player()
 
     # Add husband
-    husband = Husband()
+    husband = Husband([0, 500])
+    husband.rect.x = 1100
+    husband.rect.y = constants.SCREEN_HEIGHT - husband.rect.height - 100
     husband.player = player
 
 
@@ -116,21 +118,27 @@ def main():
                 if event.dict.get("kill", False) and not dead:
                     dead = True
 
-            if event.type == pygame.KEYDOWN and not dead:
+            if event.type == pygame.KEYDOWN :
                 if event.key == pygame.K_ESCAPE:
                     done = True
-                if event.key == pygame.K_LEFT:
-                    player.go_left()
-                if event.key == pygame.K_RIGHT:
-                    player.go_right()
-                if event.key == pygame.K_UP:
-                    player.jump()
+                if not dead:
+                    if event.key == pygame.K_LEFT:
+                        player.go_left()
+                    if event.key == pygame.K_RIGHT:
+                        player.go_right()
+                    if event.key == pygame.K_UP:
+                        player.jump()
+                    if event.key == pygame.K_SPACE:
+                        player.disable_movement()
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT and player.change_x < 0:
                     player.stop()
                 if event.key == pygame.K_RIGHT and player.change_x > 0:
                     player.stop()
+                if event.key == pygame.K_SPACE:
+                    player.enable_movement()
+
 
         # Update the player.
         active_sprite_list.update()

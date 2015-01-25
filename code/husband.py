@@ -48,16 +48,18 @@ class Husband(pygame.sprite.Sprite):
     _suspicion_value = 0
     _suspicion_delay = 0
     _last_suspicion_meter_update = 0
+    _patrol_zone = []
 
     _enabled = False
 
     player = None
 
-    def __init__(self):
+    def __init__(self, patrol_zone):
         super(Husband, self).__init__()
 
         self._change_x = -1
         self._change_y = 0
+        self._patrol_zone = patrol_zone
 
         sprite_sheet = SpriteSheet("img/husband.png")
 
@@ -164,10 +166,10 @@ class Husband(pygame.sprite.Sprite):
     def _ai(self):
         self._update_position()
 
-        if self._x0 > 500:
+        if self._x0 > self._patrol_zone[1]:
             self._direction = "L"
             self._set_direction(-1, 0)
-        elif self._x0 < 0:
+        elif self._x0 < self._patrol_zone[0]:
             self._direction = "R"
             self._set_direction(1, 0)
 
