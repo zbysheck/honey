@@ -39,6 +39,7 @@ class Husband(pygame.sprite.Sprite):
     # Statics
     _suspicion_value = 0
     _suspicion_delay = 0
+    _suspicion_meter_velocity = 7
     _last_suspicion_meter_update = 0
 
     # Public references
@@ -92,7 +93,7 @@ class Husband(pygame.sprite.Sprite):
 
     @staticmethod
     def _increase_suspicion_meter(value):
-        if (Husband._suspicion_delay % 5 == 0):
+        if (Husband._suspicion_delay % Husband._suspicion_meter_velocity == 0):
 
             if ((Husband._suspicion_value + value) >= 100):
                 Husband._suspicion_value = 100
@@ -103,7 +104,7 @@ class Husband(pygame.sprite.Sprite):
 
     @staticmethod
     def _decrease_suspicion_meter(value):
-        if (Husband._suspicion_delay % 5 == 0):
+        if (Husband._suspicion_delay % Husband._suspicion_meter_velocity == 0):
 
             if ((Husband._suspicion_value - value) < 0):
                 Husband._suspicion_value = 0
@@ -113,10 +114,20 @@ class Husband(pygame.sprite.Sprite):
         Husband._suspicion_delay += 1
 
     def _update_position(self):
-        self._x0 += self._change_x
-        self._y0 += self._change_y
-        self.rect.x += self._change_x
-        self.rect.y += self._change_y
+        k = Husband._suspicion_value // 10
+
+        if k == 0:
+            k = 1
+
+        dx = (k * self._change_x)
+        dy = (k * self._change_y)
+
+        self._x0 += dx
+        self._y0 += dy
+        self.rect.x += dx
+        self.rect.y += dy
+
+        print "k=" + str(k)
 
     def _update_animation(self):
         self._sprite_frame_frequency += 4
