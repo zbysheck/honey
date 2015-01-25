@@ -97,6 +97,7 @@ class Husband(pygame.sprite.Sprite):
         if (Husband._suspicion_delay % Husband._suspicion_meter_velocity == 0):
 
             if ((Husband._suspicion_value + value) >= 100):
+                pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "GAME OVER", "time": 10, "kill": True}))
                 Husband._suspicion_value = 100
             else:
                 Husband._suspicion_value += value
@@ -163,15 +164,15 @@ class Husband(pygame.sprite.Sprite):
 
             # check if player is in the husband sight
             if pygame.sprite.collide_rect(block, self.player):
-                print "I see you!!!"
+                #print "I see you!!!"
 
                 Husband._increase_suspicion_meter(10)
-
-                pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "I see you!!!", "time": 5}))
+                if Husband._suspicion_value < 100:
+                    pygame.event.post(Event(pygame.USEREVENT, {"action": constants.MESSAGE, "message": "I see you!!!", "time": 5}))
 
             # check if husband caught player
             if pygame.sprite.collide_rect(self, self.player):
-                print "I got you!!!"
+                #print "I got you!!!"
 
                 Husband._increase_suspicion_meter(100)
 
