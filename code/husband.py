@@ -36,29 +36,25 @@ class Husband(pygame.sprite.Sprite):
     PL_HEIGHT = 64
     PL_MARGIN = 0
 
-    # Attributes
-    _change_x = 0
-    _change_y = 0
-    _x0 = 500
-    _y0 = 0
-    _direction = "L"
-    _sprite_frame_frequency = 4
-    _walking_frames_l = []
-    _walking_frames_r = []
-    _suspicion_value = 0
-    _suspicion_delay = 0
-    _last_suspicion_meter_update = 0
-    _patrol_zone = []
-
-    _enabled = False
-
     player = None
 
     def __init__(self, patrol_zone):
         super(Husband, self).__init__()
 
+       # Attributes
         self._change_x = -1
         self._change_y = 0
+        self._x0 = 500
+        self._y0 = 0
+        self._direction = "L"
+        self._sprite_frame_frequency = 4
+        self._walking_frames_l = []
+        self._walking_frames_r = []
+        self._suspicion_value = 0
+        self._suspicion_delay = 0
+        self._last_suspicion_meter_update = 0
+        self._patrol_zone = []
+        self._enabled = False
         self._patrol_zone = patrol_zone
 
         sprite_sheet = SpriteSheet("img/husband.png")
