@@ -129,7 +129,7 @@ class Husband(pygame.sprite.Sprite):
         self.rect.y += dy
 
         #print "k=" + str(k)
-        print self.name + " _x0=" + str(self._x0) + " _y0=" + str(self._y0) + " rect.x=" + str(self.rect.x) + " rect.y=" + str(self.rect.y)
+        #print self.name + " _x0=" + str(self._x0) + " _y0=" + str(self._y0) + " rect.x=" + str(self.rect.x) + " rect.y=" + str(self.rect.y)
 
     def _update_animation(self):
         self._sprite_frame_frequency += 4
